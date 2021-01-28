@@ -1,0 +1,28 @@
+/*! temp styles */
+span {
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 25px;
+    color: #ffffff;
+    margin: 5px;
+    background-color: rgb(167, 167, 167);
+    cursor: pointer;
+}
+
+span.active {
+    background-color: rgb(0, 216, 231);
+}
+
+.error {
+    color: red;
+}
+
+.multiSelect span img {
+    width: 80px;
+}
+
+.temp_flex_sb{
+    display: flex;
+    justify-content: space-between;
+}
+/*! temp styles */
