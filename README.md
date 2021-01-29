@@ -6,6 +6,7 @@ located here: https://github.com/RussellMoore1987/open_source_project
 Right now the system has a little bit of a cumbersome installation process, Sorry! This will be improved as the system is finalized.
 
 ### Installation Video & Tour
+https://drive.google.com/file/d/1M6xs188Zqyqgtv972aRQV9Aia1BvclAR/view?usp=sharing
 
 ### Software Needed
 - PHP
