@@ -69,7 +69,10 @@
   // $useTag = $Tag_obj->useTag ?? "";
 
 ?>
-<!-- <form action="test" method="post">
+<!-- <a href="test">Add New Tag</a>
+<br>
+<br>
+<form method="post" action="test<?php if($tagId != 'add' && $tagId > 0) { echo "?tagId={$tagId}";} ?>">
   <label for="">Title</label>
   <input type="text" name="tag[title]" value="<?php echo $title; ?>">
   <br>
@@ -83,6 +86,8 @@
   <br>
   <br>
   <button type="submit">Submit</button>
+  <input type="hidden" name="tag[id]" value="<?php echo $tagId == "add" ? NULL : $tagId; ?>">
 </form>
+<br>
 Url link: <a href="test?tagId=<?php echo $id; ?>">Get tag with id of <?php echo $id; ?></a>
 <br>======================================================================================================<br> -->
