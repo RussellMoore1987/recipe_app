@@ -95,7 +95,7 @@
 
         // # example from Aggie cribs project, a page using queries,example of how queries can be used
             // * page title
-            $pageTitle = "Listing Page";
+            // $pageTitle = "Listing Page";
 
             // ! we have to clean data
             // * find by id
