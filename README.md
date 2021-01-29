@@ -52,3 +52,8 @@ npm start
 ```
 
 **Note: If things are not working quite right you may need to go into the react code and change the URL path for the requests. Change http://localhost/recipe_app/ to the appropriate path.**
+
+### Create Tables and Insert Records
+At this point you should be into the dev tool. From here you can use the various CRUD commands, as well as inserting records to get up and running with your installation. For more comprehensive tour scroll up to the installation video and tour section.
+
+
