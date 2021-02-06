@@ -2,9 +2,9 @@
     ob_start(); // Output buffering is turned on, deals with whitespace and header redirects.
     // Assign file paths to PHP constants
     // dirname() returns the path to the parent directory
-    define("PRIVATE_PATH", dirname(__FILE__)); // C:\wamp64\www\open_source_project\private
-    define("PROJECT_PATH", dirname(PRIVATE_PATH)); // C:\wamp64\www\open_source_project
-    define("PUBLIC_PATH", PROJECT_PATH . '/public'); // C:\wamp64\www\open_source_project/public
+    define("PRIVATE_PATH", dirname(__FILE__)); // C:\wamp64\www\recipe_app\private
+    define("PROJECT_PATH", dirname(PRIVATE_PATH)); // C:\wamp64\www\recipe_app
+    define("PUBLIC_PATH", PROJECT_PATH . '/public'); // C:\wamp64\www\recipe_app/public
     
     // setting up variables to check whether or not were local or live
     $localTest = [
@@ -17,7 +17,7 @@
     // defining link path
     // check to see if your local or live
     if (in_array($_SERVER['REMOTE_ADDR'], $localTest)) {
-        define("MAIN_LINK_PATH", "http://localhost/open_source_project");
+        define("MAIN_LINK_PATH", "http://localhost/recipe_app");
     } else {
         define("MAIN_LINK_PATH", "https://mooredigitalsolutions.com"); // todo: change to server variable
     }
