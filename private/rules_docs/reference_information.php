@@ -176,6 +176,7 @@
 
     // @ validation_options
         // # examples of parameters
+            // TODO: add in contains, matchOptions
             // val_validation(
             //     'value to be validated', 
             //     [
