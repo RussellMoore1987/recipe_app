@@ -6,13 +6,24 @@ body {
     font-family: 'Raleway', sans-serif;
     padding: 0px;
     margin: 0px;
+    scroll-behavior: smooth;
+}
+
+.outer-wrapper {
+    position: relative;
+    max-width: 1300px;
+    min-width: 450px;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .container {
     position: relative;
     max-width: 1300px;
     min-width: 450px;
+    height: 100vh;
     overflow: hidden;
+    overflow-y: scroll;
 }
 
 .flex-center {
@@ -48,6 +59,32 @@ body {
     align-items: center;
 }
 
+/* ====================== scrollbar pieces start ====================== */
+
+/* https://css-tricks.com/custom-scrollbars-in-webkit/ */
+::-webkit-scrollbar { 
+    width: 7px;
+    height: 7px;
+    background-color: transparent;
+ }
+
+::-webkit-scrollbar-button { 
+    display: none;
+ }
+
+::-webkit-scrollbar-thumb { 
+    border-radius: 10px;
+    background-color: rgb(221, 221, 221);   
+}
+
+.mainPanel::-webkit-scrollbar-thumb { 
+    background-color: #bbbbbb;   
+}
+
+::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
 /* ============================================================== */
 /* header */
 /* ============================================================== */
@@ -60,6 +97,7 @@ header {
 
 .logo {
     height: 50px;
+    cursor: pointer;
 }
 
 /* ============================================================== */
@@ -76,14 +114,16 @@ header {
 }
 
 .side-bar-menu {
+    z-index: 99;
     position: absolute;
     top: 0;
     right: -275px;
     width: 200px;
     min-height: 100vh;
     padding: 80px 20px 20px 20px;
-    box-shadow: -9px 0px 16px rgb(0 0 0 / 12%);
     opacity: 0;
+    background-color: #ffffff;
+    box-shadow: -9px 0px 16px rgb(0 0 0 / 12%);
     transition: right 400ms ease-in-out, opacity 400ms ease-in-out;
 }
 
@@ -92,6 +132,73 @@ header {
     opacity: 1;
 }
 
+.side-bar-modal {
+    z-index: 98;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    opacity: 0;
+    transform: scale(0);
+    background-color: rgba(0, 0, 0, 0.6);
+    transition: opacity 400ms ease-in-out;
+}
+
+.side-bar-modal.appear {
+    transform: scale(1); 
+}
+
+.side-bar-modal.open {
+    opacity: 1;
+}
+
 .side-bar-menu a {
     display: block;
+}
+
+/* ============================================================== */
+/* bottom bar nav */
+/* ============================================================== */
+
+.bottom-bar-menu {
+    z-index: 97;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    padding: 15px 20px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    box-shadow: 0px -3px 16px rgb(0 0 0 / 12%);
+}
+
+.chef-add {
+    position: relative;
+    cursor: pointer;
+}
+
+.chef-add-menu {
+    position: absolute;
+    bottom: 30px;
+    left: -115px;
+    padding: 20px 15px;
+    width: 230px;
+    background-color: #ffffff;
+    opacity: 0;
+    transform: scale(0);
+    transform-origin: bottom center;
+    border-radius: 18px;
+    box-shadow: 0px 3px 16px rgb(0 0 0 / 12%);
+    transition: opacity 400ms ease-in-out, transform 400ms ease-in-out;
+}
+
+.chef-add-menu.open {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.chef-add-menu a {
+    display: block; 
 }

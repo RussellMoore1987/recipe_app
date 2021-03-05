@@ -1,5 +1,10 @@
-</div> 
-<!-- container end -->
+    </div> 
+    <!-- // # Container End -->
+
+</div>
+<!-- // # Outer Wrapper End -->
+
+<!-- // # JS Files -->
 <script src="<?php echo PUBLIC_LINK_PATH . "/admin/js/general.js" ?>"></script>
 
 <?php
