@@ -1,28 +1,97 @@
-/*! temp styles */
-span {
-    display: inline-block;
-    padding: 10px 15px;
-    border-radius: 25px;
-    color: #ffffff;
-    margin: 5px;
-    background-color: rgb(167, 167, 167);
+/* ============================================================== */
+/* general styles */
+/* ============================================================== */
+body {
+    min-height: 100vh;
+    font-family: 'Raleway', sans-serif;
+    padding: 0px;
+    margin: 0px;
+}
+
+.container {
+    position: relative;
+    max-width: 1300px;
+    min-width: 450px;
+    overflow: hidden;
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-sb {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.flex-sa {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.flex-end {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.flex-center-horizontal {
+    display: flex;
+    justify-content: center;
+}
+
+.flex-center-vertical {
+    display: flex;
+    align-items: center;
+}
+
+/* ============================================================== */
+/* header */
+/* ============================================================== */
+
+header {
+    padding: 15px 20px;
+    height: 80px;
+    box-sizing: border-box;
+}
+
+.logo {
+    height: 50px;
+}
+
+/* ============================================================== */
+/* side bar nav */
+/* ============================================================== */
+
+.side-bar-menu-icon {
+    z-index: 100;
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    padding: 10px;
     cursor: pointer;
 }
 
-span.active {
-    background-color: rgb(0, 216, 231);
+.side-bar-menu {
+    position: absolute;
+    top: 0;
+    right: -275px;
+    width: 200px;
+    min-height: 100vh;
+    padding: 80px 20px 20px 20px;
+    box-shadow: -9px 0px 16px rgb(0 0 0 / 12%);
+    opacity: 0;
+    transition: right 400ms ease-in-out, opacity 400ms ease-in-out;
 }
 
-.error {
-    color: red;
+.side-bar-menu.open {
+    right: 0px;
+    opacity: 1;
 }
 
-.multiSelect span img {
-    width: 80px;
+.side-bar-menu a {
+    display: block;
 }
-
-.temp_flex_sb{
-    display: flex;
-    justify-content: space-between;
-}
-/*! temp styles */

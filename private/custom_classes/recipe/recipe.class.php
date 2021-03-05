@@ -11,9 +11,9 @@
             // db columns
             static protected $columns = ['id', 'title', 'description', 'cook_time', 'prep_time', 'total_time', 'num_serving', 'is_private', 'status', 'chef_id', 'directions', 'ingredients', 'main_image', 'average_rating', 'created_date'];
             // values to exclude on normal updates, should always include id
-            static protected $columnExclusions = ['id', 'comments'];
+            static protected $columnExclusions = ['id'];
             // name specific class properties you wish to included in the API
-            static protected $apiProperties = ['fullDate', 'shortDate', 'imagePath_array'];
+            static protected $apiProperties = ['fullDate', 'shortDate'];
             // db validation, // * validation_options located at: root/private/rules_docs/reference_information.php
             static protected $validation_columns = [
                 'id'=>[
