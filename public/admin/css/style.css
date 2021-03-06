@@ -6,21 +6,24 @@ body {
     font-family: 'Raleway', sans-serif;
     padding: 0px;
     margin: 0px;
+    color: #A7A7A7;
     scroll-behavior: smooth;
 }
 
 .outer-wrapper {
     position: relative;
+    width: 100%;
     max-width: 1300px;
-    min-width: 450px;
+    min-width: 350px;
     height: 100vh;
     overflow: hidden;
 }
 
 .container {
     position: relative;
+    width: 100%;
     max-width: 1300px;
-    min-width: 450px;
+    min-width: 350px;
     height: 100vh;
     overflow: hidden;
     overflow-y: scroll;
@@ -246,10 +249,31 @@ header {
 
 input[type=text] {
     width: 100%;
-    height: 50px;
-    padding: 10px 20px;
+    height: 40px;
+    padding: 0px 20px;
     margin: 8px 0;
     border: #E1E1E1 solid 1px;
     border-radius: 25px;
     box-sizing: border-box;
+    outline: none;
+    font-size: 18px;
+    color: #A7A7A7;
+    transition: border-color 400ms ease-in-out;
+}
+
+input[type=text]:focus {
+    border-color: #cacaca;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #C2C2C2;
+    opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #C2C2C2;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: #C2C2C2;
 }

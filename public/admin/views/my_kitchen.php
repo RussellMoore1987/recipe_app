@@ -1,7 +1,7 @@
 <!-- <h1>My Kitchen</h1> -->
-<div class="search flex-sb">
+<div class="main-search flex-sb">
     <div>
-        <input type="text">
+        <input type="text" placeholder="Search My Kitchen...">
     </div>
     <div>
         <i class="fal fa-sort-amount-down"></i>

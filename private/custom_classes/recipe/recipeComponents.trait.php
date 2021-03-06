@@ -3,8 +3,13 @@
         public function list_component() {
             // TODO: fix up, what about nulls
             // setting variables
-                $imagePath = IMAGE_LINK_PATH . "/large/" . $this->main_image;
+                $imagePath = $this->main_image ? IMAGE_LINK_PATH . "/large/" . $this->main_image : '';
                 $title = $this->title;
+                if (strlen($this->title) > 25) {
+                    $title = substr($this->title,0,25) . "...";
+                } else {
+                    $title = $this->title; 
+                }
                 if (strlen($this->description) > 25) {
                     $description = substr($this->description,0,25) . "...";
                 } else {
