@@ -3,7 +3,7 @@
         // @ set up section start
             // # Class List, REST API, Context API, DevTool
                 // * class_list located at: root/private/rules_docs/reference_information.php
-                static protected $classList = ["User", "Recipe", "Allergy", "Category", "Label", "MediaContent", "Post", "Tag"]; // public access use get_class_list()
+                static protected $classList = ["User", "Recipe", "Allergy", "Category", "Tag"]; // public access use get_class_list()
             // # REST API
                 // * api_documentation located at: root/private/rules_docs/reference_information.php
                 // set over arching API keys, use function to get the key
@@ -30,7 +30,8 @@
                 // TODO: documentation * sql_creation_commands located at: root/private/rules_docs/devTool_docs.php
                 // TODO: creation command, deletion command, and individual table commands drop, create, insert
                 // static protected $sqlCreationCommands = ["customSql" => "creation"]; // public access use get_other_tables_class_list()
-                static protected $sqlInsertCommands = ["customSql" => "insert"]; // public access use get_sql_insert_commands()
+                // @ static protected $sqlInsertCommands = ["customSql" => "insert"]; // public access use get_sql_insert_commands()
+                static protected $sqlInsertCommands = []; // public access use get_sql_insert_commands()
             // # Authentication
                 // * authentication located at: root/private/rules_docs/reference_information.php
                 // default static protected $authentication = ['User', 'username', 'hashedPassword', 'id'];

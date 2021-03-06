@@ -24,6 +24,8 @@ body {
     height: 100vh;
     overflow: hidden;
     overflow-y: scroll;
+    padding: 15px 15px 81px 15px;
+    box-sizing: border-box;
 }
 
 .flex-center {
@@ -90,8 +92,7 @@ body {
 /* ============================================================== */
 
 header {
-    padding: 15px 20px;
-    height: 80px;
+    height: 50px;
     box-sizing: border-box;
 }
 
@@ -161,6 +162,7 @@ header {
 /* bottom bar nav */
 /* ============================================================== */
 
+
 .bottom-bar-menu {
     z-index: 97;
     position: absolute;
@@ -201,4 +203,53 @@ header {
 
 .chef-add-menu a {
     display: block; 
+}
+
+/* ============================================================== */
+/* recipe */
+/* ============================================================== */
+
+.recipe > div{
+    display: inline-block;
+    vertical-align: top;
+}
+
+.recipe h3{
+    color: #A7A7A7;
+    margin: 10px 0px 5px;
+}
+
+.recipe span{
+    display: block;
+    color: #C9C9C9;
+}
+
+.recipe .recipe-img {
+    width: 93px;
+    height: 93px;
+    margin: 10px 5px 10px 10px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 6px;
+    box-shadow: 0px 3px 16px rgb(0 0 0 / 12%);
+}
+
+.recipe .recipe-content {
+    padding: 0px 10px;
+}
+
+/* ============================================================== */
+/* form elements */
+/* ============================================================== */
+
+
+input[type=text] {
+    width: 100%;
+    height: 50px;
+    padding: 10px 20px;
+    margin: 8px 0;
+    border: #E1E1E1 solid 1px;
+    border-radius: 25px;
+    box-sizing: border-box;
 }

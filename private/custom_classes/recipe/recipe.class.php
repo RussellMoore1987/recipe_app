@@ -3,6 +3,7 @@
     // require_once("recipeApi.trait.php");
     require_once("recipeSql.trait.php");
     require_once("recipeSeeder.trait.php");
+    require_once("recipeComponents.trait.php");
 
     class Recipe extends DatabaseObject {
         // @ class database information start
@@ -131,6 +132,7 @@
             // use RecipeApi;
             use RecipeSql;
             use RecipeSeeder;
+            use RecipeComponents;
         // @ class traits end
         
         // @ class specific queries start
@@ -162,6 +164,5 @@
                 } 
             }
         // @ methods end
-
     }
 ?>
