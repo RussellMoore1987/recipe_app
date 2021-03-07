@@ -1,5 +1,5 @@
 <?php
-    trait TagSeeder {
+    trait ImageSeeder {
 
         // get seeder default record count
         static public $seederDefaultRecordCount = 100;

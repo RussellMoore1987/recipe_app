@@ -225,6 +225,7 @@ header {
 .recipe span{
     display: block;
     color: #C9C9C9;
+    font-size: 13px;
 }
 
 .recipe .recipe-img {
