@@ -1,7 +1,23 @@
 <?php
-  $Post_obj = Post::find_by_id(255);  
-  var_dump($Post_obj);
-  echo "<br>======================================================================================================<br>";
+//   $Seeder = new Seeder();
+//   // get 
+//   $recipeId = rand(1, Recipe::count_all());
+//   $Image = new Image([
+//     'image_name' =>  'image' . $Seeder->id(1) . 'jpg',
+//     'sort' => rand(1,10),
+//     'is_featured' => rand(0,1),
+//     'alt' =>  $Seeder->max_char($Seeder->words(rand(0,10)), 50),
+//     'recipe_id' =>  $recipeId
+// ]);
+//   $Image->save();
+//   var_dump($Image);
+
+  $Images = Image::find_all();
+  var_dump($Images);
+
+  // $Post_obj = Post::find_by_id(255);  
+  // var_dump($Post_obj);
+  // echo "<br>======================================================================================================<br>";
   
   // $Tag_obj = Tag::find_by_id(25);  
   // var_dump($Tag_obj);

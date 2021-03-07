@@ -5,8 +5,8 @@
             // setting variables
                 $imagePath = $this->main_image ? IMAGE_LINK_PATH . "/large/" . $this->main_image : '';
                 $title = $this->title;
-                if (strlen($this->title) > 25) {
-                    $title = substr($this->title,0,25) . "...";
+                if (strlen($this->title) > 20) {
+                    $title = substr($this->title,0,20) . "...";
                 } else {
                     $title = $this->title; 
                 }
