@@ -1,7 +1,7 @@
 <?php
     // include api trait
     require_once("imageSql.trait.php");
-    // require_once("imageSeeder.trait.php");
+    require_once("imageSeeder.trait.php");
 
     class Image extends DatabaseObject {
         // @ class database information start
@@ -9,7 +9,7 @@
             // Name of the table
             static protected $tableName = "Images";
             // db columns
-            static protected $columns = ['id', 'image_name', 'sort', 'is_featured', 'alt', 'chef_id' ];
+            static protected $columns = ['id', 'image_name', 'sort', 'is_featured', 'alt', 'recipe_id' ];
             // values to exclude on normal updates, should always include id
             static protected $columnExclusions = ['id'];
             // name specific properties you wish to included in the API
@@ -53,8 +53,8 @@
                     'min' => 2, // string length
                     'html' => 'no'
                 ],
-                'chef_id' => [
-                    'name' => 'Chef id',
+                'recipe_id' => [
+                    'name' => 'Recipe id',
                     'required' => true,
                     'type' => 'int', // type of int
                     'num_min' => 1, // number min value
@@ -66,7 +66,7 @@
 
         // @ class traits start
             use ImageSql;
-            // use ImageSeeder;
+            use ImageSeeder;
         // @ class traits end
     }
     
