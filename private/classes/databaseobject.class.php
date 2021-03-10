@@ -90,7 +90,8 @@
             
             // * sql_queries located at: root/private/rules_docs/reference_information.php
             // find by sql
-            static public function find_by_sql($sql) {
+            // TODO-CI: add to main CI
+            static protected function find_by_sql($sql) {
                 // make a query
                 $result = self::$database->query($sql);
                 // error handling

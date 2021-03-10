@@ -1,28 +1,328 @@
-/*! temp styles */
-span {
-    display: inline-block;
-    padding: 10px 15px;
-    border-radius: 25px;
-    color: #ffffff;
-    margin: 5px;
-    background-color: rgb(167, 167, 167);
+/* ============================================================== */
+/* general styles */
+/* ============================================================== */
+:root {
+    --theme-color: #B2A57C;
+}
+
+body {
+    min-height: 100vh;
+    font-family: 'Raleway', sans-serif;
+    padding: 0px;
+    margin: 0px;
+    color: #A7A7A7;
+    scroll-behavior: smooth;
+}
+
+.outer-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1300px;
+    min-width: 350px;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 1300px;
+    min-width: 350px;
+    height: 100vh;
+    overflow: hidden;
+    overflow-y: scroll;
+    padding: 15px 15px 81px 15px;
+    box-sizing: border-box;
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-sb {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.flex-sa {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.flex-end {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.flex-center-horizontal {
+    display: flex;
+    justify-content: center;
+}
+
+.flex-center-vertical {
+    display: flex;
+    align-items: center;
+}
+
+.full-width {
+    width: 100%;
+}
+
+/* ====================== scrollbar pieces start ====================== */
+
+/* https://css-tricks.com/custom-scrollbars-in-webkit/ */
+::-webkit-scrollbar { 
+    width: 7px;
+    height: 7px;
+    background-color: transparent;
+ }
+
+::-webkit-scrollbar-button { 
+    display: none;
+ }
+
+::-webkit-scrollbar-thumb { 
+    border-radius: 10px;
+    background-color: rgb(221, 221, 221);   
+}
+
+.mainPanel::-webkit-scrollbar-thumb { 
+    background-color: #bbbbbb;   
+}
+
+::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
+/* ============================================================== */
+/* header */
+/* ============================================================== */
+
+header {
+    height: 50px;
+    box-sizing: border-box;
+}
+
+.logo {
+    height: 50px;
     cursor: pointer;
 }
 
-span.active {
-    background-color: rgb(0, 216, 231);
+/* ============================================================== */
+/* side bar nav */
+/* ============================================================== */
+
+.side-bar-menu-icon {
+    z-index: 100;
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    padding: 10px;
+    cursor: pointer;
 }
 
-.error {
-    color: red;
+.side-bar-menu {
+    z-index: 99;
+    position: absolute;
+    top: 0;
+    right: -275px;
+    width: 200px;
+    min-height: 100vh;
+    padding: 80px 20px 20px 20px;
+    opacity: 0;
+    background-color: #ffffff;
+    box-shadow: -9px 0px 16px rgb(0 0 0 / 12%);
+    transition: right 400ms ease-in-out, opacity 400ms ease-in-out;
 }
 
-.multiSelect span img {
-    width: 80px;
+.side-bar-menu.open {
+    right: 0px;
+    opacity: 1;
 }
 
-.temp_flex_sb{
-    display: flex;
-    justify-content: space-between;
+.side-bar-modal {
+    z-index: 98;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    opacity: 0;
+    transform: scale(0);
+    background-color: rgba(0, 0, 0, 0.6);
+    transition: opacity 400ms ease-in-out;
 }
-/*! temp styles */
+
+.side-bar-modal.appear {
+    transform: scale(1); 
+}
+
+.side-bar-modal.open {
+    opacity: 1;
+}
+
+.side-bar-menu a {
+    display: block;
+}
+
+/* ============================================================== */
+/* bottom bar nav */
+/* ============================================================== */
+
+
+.bottom-bar-menu {
+    z-index: 97;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    padding: 15px 20px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    box-shadow: 0px -3px 16px rgb(0 0 0 / 12%);
+}
+
+.chef-add {
+    position: relative;
+    cursor: pointer;
+}
+
+.chef-add-menu {
+    position: absolute;
+    bottom: 30px;
+    left: -115px;
+    padding: 20px 15px;
+    width: 230px;
+    background-color: #ffffff;
+    opacity: 0;
+    transform: scale(0);
+    transform-origin: bottom center;
+    border-radius: 18px;
+    box-shadow: 0px 3px 16px rgb(0 0 0 / 12%);
+    transition: opacity 400ms ease-in-out, transform 400ms ease-in-out;
+}
+
+.chef-add-menu.open {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.chef-add-menu a {
+    display: block; 
+}
+
+/* ============================================================== */
+/* recipe */
+/* ============================================================== */
+
+.recipe > div{
+    display: inline-block;
+    vertical-align: top;
+}
+
+.recipe h3{
+    color: #A7A7A7;
+    margin: 10px 0px 5px;
+}
+
+.recipe span{
+    display: block;
+    color: #C9C9C9;
+    font-size: 13px;
+}
+
+.recipe .recipe-img {
+    width: 93px;
+    height: 93px;
+    margin: 10px 5px 10px 10px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 6px;
+    box-shadow: 0px 3px 16px rgb(0 0 0 / 12%);
+}
+
+.recipe .recipe-content {
+    padding: 0px 10px;
+}
+
+/* ============================================================== */
+/* form elements */
+/* ============================================================== */
+
+
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=number] {
+    width: 100%;
+    height: 50px;
+    padding: 0px 20px;
+    margin: 8px 0;
+    border: #E1E1E1 solid 1px;
+    border-radius: 25px;
+    box-sizing: border-box;
+    outline: none;
+    font-size: 18px;
+    color: #A7A7A7;
+    transition: border-color 400ms ease-in-out;
+}
+
+input[type=text]:focus {
+    border-color: #cacaca;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #C2C2C2;
+    opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #C2C2C2;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: #C2C2C2;
+}
+
+button {
+    margin: 8px 0px;
+    background-color: var(--theme-color, #B2A57C);
+    padding: 15px 20px;
+    color: #ffffff;
+    font-size: 20px;
+    border: unset;
+    border-radius: 25px;
+    box-shadow: 0px 3px 16px rgb(0 0 0 / 12%);
+}
+
+/* ============================================================== */
+/* login/out page */
+/* ============================================================== */
+
+.login {
+    width: 100%;
+    max-width: 500px;
+    min-width: 350px;
+    padding: 0px 40px;
+    box-sizing: border-box;
+}
+
+.login-logo {
+    width: 100%;
+    margin-bottom: 30px;
+    padding: 0px 30px;
+    box-sizing: border-box;
+}
+
+.login input[type=text],
+.login input[type=password],
+.login input[type=email],
+.login button {
+    margin: 10px 0;
+}

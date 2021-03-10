@@ -1,12 +1,34 @@
 <?php
-    // include main logic for all pages
-    require_once('../private/initialize.php');
-    // try to login
-    var_dump($_POST);
-    if (is_post_request() && isset($_POST["login"])) {
-        $message = Session::login($_POST["login"]);
-    }
-    $message = $message ?? "";
+    // TODO-CI: add to main CI
+    // @ standard log in/out start
+        // include main logic for all pages
+        require_once('../private/initialize.php');
+
+        // get to see if we are logging in
+        if (is_post_request() && isset($_POST["login"])) {
+            $typeOfMessage = 'error';
+            $message = Session::login($_POST["login"]);
+        }
+
+        // check to see if were logging someone out
+        if (is_get_request() && isset($_GET["logout"])) {
+            // Need to do a little magic trick to keep the theme going
+            $themeId = $_SESSION['themeId'] ?? 0;
+            // logout
+            $message = Session::logout($redirect = 'no');
+            // set theme variable
+            Session::override_var('themeId', $themeId);
+        }
+        
+        // set message
+        $typeOfMessage = $typeOfMessage ?? 'info';
+        $message = $message ?? "";
+    // @ standard log in/out start
+
+    // check fo theme
+    $themeId = isset($_GET["themeId"]) ? (int)$_GET["themeId"] : 0;
+    $themeInfo = Chef::get_theme_info($themeId);
+    $appIcon = IMAGE_LINK_PATH . "/original/{$themeInfo['app_icon']}";
 ?>
 
 <!DOCTYPE html>
@@ -14,39 +36,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" href="<?php echo $appIcon; ?>" />
+    <link rel="icon" href="<?php echo $appIcon; ?>" type="image/x-icon">
+    <link rel="shortcut icon" href="<?php echo $appIcon; ?>" type="image/x-icon"> 
     <title>Login</title>
-</head>
-<body>
-    <div>
-        <?php echo $message; ?>
-    </div>
-    <form method="post">
-        <label for="username">Username</label>
-        <input type="text" id='username' name="login[field1]" maxlength='50' minlength='2' required >
-        <label for="password">Password</label>
-        <input type="password" id='password' name="login[password]" maxlength='50' minlength='2' required >
-        <button type="submit">Login</button>
-    </form>
-
-    <?php
-        $User = User::find_where("username = 'admin'");
-        if (!$User) {
-            // main user details
-            $mainUserDetails = ['username' => 'admin', 'hashedPassword' => 'test', 'firstName' => 'Admin', 'lastName' => 'Person', 'emailAddress' => 'someone@gmail.com'];
-            // add main user 
-            $User = new User($mainUserDetails);
-            // save main user
-            $User->save();
-            var_dump($User->errors);
+    <!-- main styles -->
+    <link rel="stylesheet" href="<?php echo PUBLIC_LINK_PATH . "/admin/css/style.css?{$assetVersion}"; ?>">
+    <style>
+        :root {
+            --theme-color: <?php echo $themeInfo['theme_color']; ?>;
         }
-        echo "Username: {$User->username}";
-        echo "<br>";
-        echo "Name: {$User->firstName} {$User->lastName}";
-        echo "<br>";
-        echo "EmailAddress: {$User->emailAddress}";
-        echo "<br>";
-        echo "HashedPassword:{$User->hashedPassword}";
-    ?>
-
+    </style>
+</head>
+<body class="flex-center">
+    <div class="login">
+        <div>
+            <?php echo $message; ?>
+        </div>
+        <img class="login-logo" src="<?php echo IMAGE_LINK_PATH . "/original/{$themeInfo['login_logo']}"; ?>" alt="Login Logo">
+        <form method="post">
+            <input type="email" id='email' name="login[field1]" placeholder="Email" maxlength='50' minlength='2' required >
+            <input type="password" id='password' name="login[password]" placeholder="Password" maxlength='50' minlength='2' required >
+            <button class="full-width" type="submit">Login</button>
+        </form>
+    </div>
 </body>
 </html>

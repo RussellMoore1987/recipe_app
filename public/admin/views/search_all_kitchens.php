@@ -1,0 +1,1 @@
+<h1>Search All Kitchens</h1>

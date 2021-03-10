@@ -2,16 +2,23 @@
     trait CategorySql {
         // Main SQL Structure
         static protected $sqlStructure = "
-            CREATE TABLE IF NOT EXISTS categories ( 
-                id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                title VARCHAR(50) NOT NULL,
-                subCatId INT(10) UNSIGNED NOT NULL DEFAULT 0,
-                note VARCHAR(255) DEFAULT NULL,
-                useCat TINYINT(1) UNSIGNED NOT NULL,
-                KEY subCatId (subCatId) 
-            ) ENGINE=InnoDB
+            CREATE TABLE IF NOT EXISTS Categories (
+                id int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                name varchar(35) UNIQUE NOT NULL
+            ) ENGINE=InnoDB;
         ";
-        // for useCat
-        // * collection_type_reference, located at: root/private/rules_docs/reference_information.php
+
+        // connecting tables
+        static protected $otherTables = [
+            "RecipesToCategories" => "
+                CREATE TABLE IF NOT EXISTS RecipesToCategories ( 
+                    cat_id int UNSIGNED NOT NULL,
+                    recipe_id int UNSIGNED NOT NULL,
+                    PRIMARY KEY (cat_id, recipe_id),
+                    FOREIGN KEY (cat_id) REFERENCES Categories(id) ON DELETE CASCADE,
+                    FOREIGN KEY(recipe_id) REFERENCES Recipes(id) ON DELETE CASCADE
+                ) ENGINE=InnoDB
+            "
+        ];
     }
-?>
+?>   

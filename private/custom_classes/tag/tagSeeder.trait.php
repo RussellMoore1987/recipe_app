@@ -2,7 +2,7 @@
     trait TagSeeder {
 
         // get seeder default record count
-        static public $seederDefaultRecordCount = 100;
+        static public $seederDefaultRecordCount = 55;
 
         // sql feeder
         static public function seeder_setter(object $Seeder) {

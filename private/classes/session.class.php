@@ -24,14 +24,11 @@
             }
         }
 
+        // TODO-CI: add to main CI
         // override_var variable, main purpose to override session variables
         public static function override_var(string $name, $value) {
             // override if there variable 
-            if (self::check_var_exists($name)) {
-                $_SESSION[$name] = $value;
-            } else {
-                exit("No session variable with the name \"{$name}\" exists. If you wish to add that variable please use Session::add_var(name,value);.");
-            }
+            $_SESSION[$name] = $value;
         }
 
         // unset session variable

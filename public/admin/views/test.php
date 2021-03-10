@@ -1,7 +1,37 @@
 <?php
-  $Post_obj = Post::find_by_id(255);  
-  var_dump($Post_obj);
-  echo "<br>======================================================================================================<br>";
+
+echo password_hash('test1', PASSWORD_BCRYPT);
+echo '<br><br>';
+echo password_hash('test2', PASSWORD_BCRYPT);
+echo '<br><br>';
+echo password_hash('test', PASSWORD_BCRYPT);
+
+// $Chefs = Chef::find_all();
+// var_dump($Chefs);
+
+$Chef = Chef::find_where("email = 'truthandgoodness87@gmail.com'");
+var_dump($Chef);
+
+
+//   $Seeder = new Seeder();
+//   // get 
+//   $recipeId = rand(1, Recipe::count_all());
+//   $Image = new Image([
+//     'image_name' =>  'image' . $Seeder->id(1) . 'jpg',
+//     'sort' => rand(1,10),
+//     'is_featured' => rand(0,1),
+//     'alt' =>  $Seeder->max_char($Seeder->words(rand(0,10)), 50),
+//     'recipe_id' =>  $recipeId
+// ]);
+//   $Image->save();
+//   var_dump($Image);
+
+  // $Images = Image::find_all();
+  // var_dump($Images);
+
+  // $Post_obj = Post::find_by_id(255);  
+  // var_dump($Post_obj);
+  // echo "<br>======================================================================================================<br>";
   
   // $Tag_obj = Tag::find_by_id(25);  
   // var_dump($Tag_obj);
