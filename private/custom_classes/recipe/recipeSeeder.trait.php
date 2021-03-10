@@ -9,8 +9,8 @@
         // sql feeder
         static public function seeder_setter(object $Seeder) {
             // setting some variables
-                // get users
-                $author = rand(1, User::count_all());
+                // get chef
+                $chef = rand(1, Chef::count_all());
                 $cook_time = rand(10,60);
                 $prep_time = rand(10,60);
                 $counter = rand(3,12);
@@ -36,7 +36,7 @@
                 'num_serving' => rand(1,10),
                 'is_private' => rand(1,100) > 80 ? 1 : 0,
                 'status' => rand(1,100) > 90 ? 0 : 1,
-                'chef_id' => rand(1,100), 
+                'chef_id' => $chef, 
                 'directions' => $Seeder->max_char($Seeder->paragraphs(rand(1,5)), 65000, "."),
                 'ingredients' => json_encode($ingredients),
                 'main_image' => $main_image,

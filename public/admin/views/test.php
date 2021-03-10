@@ -1,4 +1,18 @@
 <?php
+
+echo password_hash('test1', PASSWORD_BCRYPT);
+echo '<br><br>';
+echo password_hash('test2', PASSWORD_BCRYPT);
+echo '<br><br>';
+echo password_hash('test', PASSWORD_BCRYPT);
+
+// $Chefs = Chef::find_all();
+// var_dump($Chefs);
+
+$Chef = Chef::find_where("email = 'truthandgoodness87@gmail.com'");
+var_dump($Chef);
+
+
 //   $Seeder = new Seeder();
 //   // get 
 //   $recipeId = rand(1, Recipe::count_all());
@@ -12,8 +26,8 @@
 //   $Image->save();
 //   var_dump($Image);
 
-  $Images = Image::find_all();
-  var_dump($Images);
+  // $Images = Image::find_all();
+  // var_dump($Images);
 
   // $Post_obj = Post::find_by_id(255);  
   // var_dump($Post_obj);

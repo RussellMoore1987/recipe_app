@@ -6,6 +6,7 @@
             } 
 
         // @ login functionality start
+            // TODO-CI: add to main CI
             // # login
             static public function login(array $login_data_array) {
                 // get class and fields, there should only 4 values in this array
@@ -20,16 +21,22 @@
                     $username = DatabaseObject::db_escape(trim($login_data_array['field1']));
                     $password = trim($login_data_array['password']);
                 // find user
-                    echo "{$findByFiled} = '{$username}'";
-                    $User = $className::find_where("{$findByFiled} = '{$username}'");
+                    var_dump('{$findByFiled} = \'{$username}\'',"{$findByFiled} = '{$username}'");
+                    $User = $className::find_where("{$findByFiled} = '{$username}'")[0];
+                    var_dump('$User', $User);
                     // error handling, if not there, throw an error
                     if (!$User) {
                         echo 'Got Here!!!';
                         return "Sorry, {$findByFiled} or password were incorrect.";
                     }
                 // check to see if password matches
+                var_dump('$password', $password);
+                var_dump('$User->$passwordFiled', $User->$passwordFiled);
+                var_dump('$User', $User);
+                var_dump('$passwordFiled', $passwordFiled);
+                var_dump('password_verify($password, $User->$passwordFiled)', password_verify($password, $User->$passwordFiled));
                 if (password_verify($password, $User->$passwordFiled)) {
-                    Session::add_var('userIdentifier', $User->$identifierFiledName);
+                    Session::override_var('userIdentifier', $User->$identifierFiledName);
                 } else {
                     return "Sorry, {$findByFiled} or password were incorrect.";
                 }
@@ -38,21 +45,27 @@
                 exit();
             } 
             
+            // TODO-CI: add to main CI
             // # check login
-            static public function check_login() {
+            static public function check_login(string $linkAttachment = "") {
                 // get username and password
                 if (Session::check_var_exists('userIdentifier')) {
                     return true;
                 } else { 
-                    redirect_to(PUBLIC_LINK_PATH . '/login.php');
+                    redirect_to(PUBLIC_LINK_PATH . '/login.php' . $linkAttachment);
                 }
             } 
 
+            // TODO-CI: add to main CI
             // # logout
-            static public function logout() {
+            static public function logout($redirect = 'yes') {
                 // get username and password
                 Session::unset_var();
-                redirect_to(PUBLIC_LINK_PATH . '/login.php');
+                if ($redirect == 'yes') {
+                    redirect_to(PUBLIC_LINK_PATH . '/login.php?message=You have been successfully logged out!');
+                } else {
+                    return "You have been successfully logged out!";
+                }
             } 
         // @ login functionality end
 

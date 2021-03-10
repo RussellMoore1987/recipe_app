@@ -2,6 +2,11 @@
     // check to see if page title was sent
     $pageTitle = $pageTitle ?? "Default Page";
 
+    // some variables to help theme pages
+    $logoutLink = PUBLIC_LINK_PATH . '/login.php?logout=yes&themeId=' . $_SESSION['themeId'];
+    $appIcon = IMAGE_LINK_PATH . "/original/{$_SESSION['appIcon']}";
+    $headerLogo = IMAGE_LINK_PATH . "/original/{$_SESSION['headerLogo']}";
+    $themeColor = $_SESSION['themeColor'];
 ?>
 
 <!DOCTYPE html>
@@ -18,11 +23,17 @@
     <script src="https://kit.fontawesome.com/58867e1c02.js" crossorigin="anonymous"></script>
     <!-- fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,400i,700&display=swap" rel="stylesheet">
-    <!-- // TODO: set favicon -->
-    <!-- <link rel="apple-touch-icon" href="logo192.png" /> -->
+    <!-- // TODO-CI: set favicon -->
+    <link rel="apple-touch-icon" href="<?php echo $appIcon; ?>" />
+    <link rel="icon" href="<?php echo $appIcon; ?>" type="image/x-icon">
+    <link rel="shortcut icon" href="<?php echo $appIcon; ?>" type="image/x-icon"> 
+    <style>
+        :root {
+            --theme-color: <?php echo $themeColor ?>;
+        }
+    </style>
     <?php
         // todo list
-            // set favicon
             // pull in custom CSS
     ?>
 </head>
@@ -64,7 +75,7 @@
                 <a href="manage_tags">Manage Tags</a>
                 <a href="manage_allergies">Manage Allergies</a>
                 <a href="manage_chefs">Manage My Chefs</a>
-                <a href="<?php echo PUBLIC_LINK_PATH . '/login.php?logout=yes' ?>">Logout</a>
+                <a href="<?php echo $logoutLink; ?>">Logout</a>
 
                 <a href="my_kitchen">Use As App</a>
                 <a href="my_kitchen">About This App</a>

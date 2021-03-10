@@ -3,7 +3,7 @@
         // @ set up section start
             // # Class List, REST API, Context API, DevTool
                 // * class_list located at: root/private/rules_docs/reference_information.php
-                static protected $classList = ["User", "Recipe", "Image", "Allergy", "Category", "Tag"]; // public access use get_class_list()
+                static protected $classList = ["Chef", "Recipe", "Image", "Allergy", "Category", "Tag"]; // public access use get_class_list()
             // # REST API
                 // * api_documentation located at: root/private/rules_docs/reference_information.php
                 // set over arching API keys, use function to get the key
@@ -35,11 +35,12 @@
             // # Authentication
                 // * authentication located at: root/private/rules_docs/reference_information.php
                 // default static protected $authentication = ['User', 'username', 'hashedPassword', 'id'];
-                static protected $authenticationSettings = ['User', 'username', 'hashedPassword', 'id']; // public access use get_authentication_info()
+                static protected $authenticationSettings = ['Chef', 'email', 'hashed_password', 'id']; // public access use get_authentication_info()
+                // TODO-CI: get_authentication_info() make it
             // # Default Homepage
                 // when an individual logs in this is the systems default homepage, assuming they are going into the secure environment always put '/admin/...pageName'
                 // ex: static protected $defaultHomepage = '/admin/dashboard';
-                static protected $defaultHomepage = '/admin/my_kitchen';
+                static public $defaultHomepage = '/admin/my_kitchen';
             // # authentication token 
                 // TODO: use authentication token add
             // # custom code spots

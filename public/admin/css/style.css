@@ -1,6 +1,10 @@
 /* ============================================================== */
 /* general styles */
 /* ============================================================== */
+:root {
+    --theme-color: #B2A57C;
+}
+
 body {
     min-height: 100vh;
     font-family: 'Raleway', sans-serif;
@@ -62,6 +66,10 @@ body {
 .flex-center-vertical {
     display: flex;
     align-items: center;
+}
+
+.full-width {
+    width: 100%;
 }
 
 /* ====================== scrollbar pieces start ====================== */
@@ -248,9 +256,12 @@ header {
 /* ============================================================== */
 
 
-input[type=text] {
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=number] {
     width: 100%;
-    height: 40px;
+    height: 50px;
     padding: 0px 20px;
     margin: 8px 0;
     border: #E1E1E1 solid 1px;
@@ -277,4 +288,41 @@ input[type=text]:focus {
 
 ::-ms-input-placeholder { /* Microsoft Edge */
     color: #C2C2C2;
+}
+
+button {
+    margin: 8px 0px;
+    background-color: var(--theme-color, #B2A57C);
+    padding: 15px 20px;
+    color: #ffffff;
+    font-size: 20px;
+    border: unset;
+    border-radius: 25px;
+    box-shadow: 0px 3px 16px rgb(0 0 0 / 12%);
+}
+
+/* ============================================================== */
+/* login/out page */
+/* ============================================================== */
+
+.login {
+    width: 100%;
+    max-width: 500px;
+    min-width: 350px;
+    padding: 0px 40px;
+    box-sizing: border-box;
+}
+
+.login-logo {
+    width: 100%;
+    margin-bottom: 30px;
+    padding: 0px 30px;
+    box-sizing: border-box;
+}
+
+.login input[type=text],
+.login input[type=password],
+.login input[type=email],
+.login button {
+    margin: 10px 0;
 }
