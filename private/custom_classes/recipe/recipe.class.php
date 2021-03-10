@@ -119,7 +119,7 @@
                     'max' => 3 // string length
                 ], 
                 'created_date' => [
-                    'name'=>'Post Created Date',
+                    'name'=>'Recipe Created Date',
                     'required' => true,
                     'type' => 'str', // type of string
                     'exact' => 10, // string length
