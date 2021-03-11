@@ -1,9 +1,29 @@
 <?php
 $target_dir = "../images/original/";
-$target_file = $target_dir . basename($_FILES["filesToUpload"]["name"]);
-console_log($target_file);
+console_log("POST");
+console_log($_POST);
+console_log("FILES");
+console_log($_FILES);
+$target_file = "";
+$id = "";
 $uploadOk = 1;
-$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+$imageFileType = "";
+if($_POST){
+  $target_file = $target_dir . basename($_FILES["recipeImage"]["name"]);
+  $id = $_POST["recipeId"];
+  
+  console_log($imageFileType);
+} else {
+  console_log("No form posted");
+}
+
+if($_FILES){
+  $target_file = $target_dir . basename($_FILES["recipeImage"]["name"]);
+  console_log($target_file);
+  $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+  console_log($imageFileType);
+
+}
 
 // Check if image file is a actual image or fake image
 if(isset($_POST["submit"])) {
@@ -24,7 +44,7 @@ if (file_exists($target_file)) {
 }
 
 // Check file size
-if ($_FILES["fileToUpload"]["size"] > 500000) {
+if ($_FILES["recipeImage"]["size"] > 5000000) {
   echo "Sorry, your file is too large.";
   $uploadOk = 0;
 }
@@ -41,8 +61,8 @@ if ($uploadOk == 0) {
   echo "Sorry, your file was not uploaded.";
 // if everything is ok, try to upload file
 } else {
-  if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-    echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
+  if (move_uploaded_file($_FILES["recipeImage"]["tmp_name"], $target_file)) {
+    echo "The file ". htmlspecialchars( basename( $_FILES["recipeImage"]["name"])). " has been uploaded.";
   } else {
     echo "Sorry, there was an error uploading your file.";
   }

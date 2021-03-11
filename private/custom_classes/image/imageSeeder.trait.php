@@ -11,7 +11,7 @@
 
             // build array
             $seederInfo = [
-                'image_name' =>  'image' . $Seeder->id(1) . 'jpg',
+                'image_name' =>  'image' . $Seeder->id(1) . '.jpg',
                 'sort' => rand(1,10),
                 'is_featured' => rand(0,1),
                 'alt' =>  $Seeder->max_char($Seeder->words(rand(0,10)), 50),

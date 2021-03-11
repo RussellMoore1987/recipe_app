@@ -3,5 +3,6 @@
     $pageTitle = "Recipe Images";
 
     // get recipe images
-    $Images = Image::find_all_recipe_images(0);
+    $id = $_GET['id'];
+    $Images = Image::find_all_recipe_images($id);
 ?>

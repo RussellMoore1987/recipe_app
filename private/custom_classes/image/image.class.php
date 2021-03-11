@@ -2,6 +2,7 @@
     // include api trait
     require_once("imageSql.trait.php");
     require_once("imageSeeder.trait.php");
+    require_once("imageComponents.trait.php");
 
     class Image extends DatabaseObject {
         // @ class database information start
@@ -67,15 +68,15 @@
         // @ class traits start
             use ImageSql;
             use ImageSeeder;
+            use ImageComponents;
         // @ class traits end
 
-                    // Find all the  associated with the recipe_id
-                    static public function find_all_recipe_images(int $recipe = 0) {
-                        return [];
-                        $sql = "SELECT id, image_name, sort, is_featured, alt, recipe_id FROM Images ";
-                        $sql .= "WHERE recipe_id = '{$recipe}'";
-                        return self::find_by_sql($sql);
-                    }
+        // Find all the  associated with the recipe_id
+        static public function find_all_recipe_images(int $recipe = 0) {
+            $sql = "SELECT id, image_name, sort, is_featured, alt, recipe_id FROM Images ";
+            $sql .= "WHERE recipe_id = $recipe";
+            return self::find_by_sql($sql);
+        }
     }
     
 ?>

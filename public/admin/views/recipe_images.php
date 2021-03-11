@@ -9,14 +9,13 @@
 .preview-image {
     width: 150px;
     height: 150px;
-    background-color: red;
     margin: 10px;
 }
 
 .preview-image>.add-image {
     font-weight: bolder;
     font-size: 72px;
-    background: white;
+    border: 2px black solid;
     border-radius: 100%;
     width: 75px;
     height: 75px;
