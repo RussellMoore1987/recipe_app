@@ -10,39 +10,11 @@
 
 
 -- Список Дел:
+    -- check to make sure both seeding process works
+    -- put `` around table names or chang class table names
+    -- ! add classes, traits, QSL, and all tables, then do the cartetion inserts
     -- testing to make sure all Cascade deletes work
-    -- x chef 
-    --     class
-    --     sql
-    --     seeder
-    -- x recipe
-    --     class
-    --     sql
-    --     seeder
-    -- x image
-    --     class
-    --     sql
-    --     seeder
-    -- x review
-    --     class
-    --     sql
-    --     seeder
-    -- x cookbook
-    --     class
-    --     sql
-    --     seeder
-    -- x tag
-    --     class
-    --     sql
-    --     seeder
-    -- x category
-    --     x class
-    --     x sql
-    --     x seeder
-    -- x allergy
-    --     x class
-    --     x sql
-    --     x seeder
+   
 
 -- @ Chefs
 CREATE TABLE IF NOT EXISTS Chefs (
@@ -219,3 +191,26 @@ CREATE TABLE IF NOT EXISTS Allergies (
 
 
 
+
+
+
+
+
+
+
+
+
+-- test sql for fun 
+-- get recipes and ratings
+SELECT r.title, AVG(rating)
+FROM Recipes AS r
+    INNER JOIN Reviews AS re
+        ON r.id = re.recipe_id
+GROUP BY r.id, r.title;
+
+-- count of try leader recipes for chef
+SELECT c.name, COUNT(chef_id)
+FROM Chefs AS c
+    INNER JOIN Trylater AS t
+        ON c.id = t.chef_id
+GROUP BY c.id, c.name;

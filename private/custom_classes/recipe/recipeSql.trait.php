@@ -20,5 +20,27 @@
                 created_date DATE NOT NULL
             ) ENGINE=InnoDB
         ";
+
+        // connecting tables
+        static protected $otherTables = [
+            "TryLater" => "
+                CREATE TABLE IF NOT EXISTS TryLater ( 
+                    chef_id int UNSIGNED NOT NULL,
+                    recipe_id int UNSIGNED NOT NULL,
+                    PRIMARY KEY (chef_id, recipe_id),
+                    FOREIGN KEY(chef_id) REFERENCES Chefs(id) ON DELETE CASCADE,
+                    FOREIGN KEY (recipe_id) REFERENCES Recipes(id) ON DELETE CASCADE 
+                ) ENGINE=InnoDB
+            ",
+            "MyFavorites" => "
+                CREATE TABLE IF NOT EXISTS MyFavorites ( 
+                    chef_id int UNSIGNED NOT NULL,
+                    recipe_id int UNSIGNED NOT NULL,
+                    PRIMARY KEY (chef_id, recipe_id),
+                    FOREIGN KEY(chef_id) REFERENCES Chefs(id) ON DELETE CASCADE,
+                    FOREIGN KEY (recipe_id) REFERENCES Recipes(id) ON DELETE CASCADE 
+                ) ENGINE=InnoDB
+            "
+        ];
     }
 ?>
