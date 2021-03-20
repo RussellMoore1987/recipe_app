@@ -2,7 +2,7 @@
     trait CookbookSql {
         // Main SQL Structure
         static protected $sqlStructure = "
-            CREATE TABLE IF NOT EXISTS Cookbooks (
+            CREATE TABLE IF NOT EXISTS `Cookbooks` (
                 id int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
                 title varchar(50) NOT NULL,
                 chef_id int UNSIGNED NOT NULL,
@@ -14,8 +14,8 @@
 
         // connecting tables
         static protected $otherTables = [
-            "cookbooksToRecipes" => "
-                CREATE TABLE IF NOT EXISTS CookbooksToRecipes ( 
+            "CookbooksToRecipes" => "
+                CREATE TABLE IF NOT EXISTS `CookbooksToRecipes` ( 
                     cookbook_id int UNSIGNED NOT NULL,
                     recipe_id int UNSIGNED NOT NULL,
                     PRIMARY KEY (cookbook_id, recipe_id),

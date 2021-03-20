@@ -2,7 +2,7 @@
     trait ImageSql {
         // Main SQL Structure
         static protected $sqlStructure = "
-            CREATE TABLE IF NOT EXISTS Images (
+            CREATE TABLE IF NOT EXISTS `Images` (
                 id int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
                 image_name varchar(25) NOT NULL,
                 sort tinyint(1) DEFAULT 10,

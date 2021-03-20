@@ -2,7 +2,7 @@
     trait ChefSql {
         // Main SQL Structure
         static protected $sqlStructure = "
-            CREATE TABLE IF NOT EXISTS Chefs (
+            CREATE TABLE IF NOT EXISTS `Chefs` (
                 id int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
                 name varchar(50) NOT NULL,
                 email varchar(150) UNIQUE NOT NULL,
@@ -16,8 +16,8 @@
 
         // connecting tables
         static protected $otherTables = [
-            "headChefData" => "
-                CREATE TABLE IF NOT EXISTS HeadChefData ( 
+            "HeadChefData" => "
+                CREATE TABLE IF NOT EXISTS `HeadChefData` ( 
                     head_chef_id int UNSIGNED NOT NULL PRIMARY KEY,
                     login_logo varchar(30),
                     header_logo varchar(30),

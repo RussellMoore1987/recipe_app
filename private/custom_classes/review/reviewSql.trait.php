@@ -2,7 +2,7 @@
     trait ReviewSql {
         // Main SQL Structure
         static protected $sqlStructure = "
-            CREATE TABLE IF NOT EXISTS Reviews (
+            CREATE TABLE IF NOT EXISTS `Reviews` (
                 id int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
                 title varchar(25),	
                 review varchar(255),

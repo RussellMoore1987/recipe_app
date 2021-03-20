@@ -15,7 +15,7 @@
    
 
 -- @ Chefs
-CREATE TABLE IF NOT EXISTS Chefs (
+CREATE TABLE IF NOT EXISTS `Chefs` (
     id int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name varchar(50) NOT NULL,
     email varchar(150) UNIQUE  NOT NULL,
@@ -26,14 +26,14 @@ CREATE TABLE IF NOT EXISTS Chefs (
     KEY name (name)
 ) ENGINE=InnoDB;
 
-    CREATE TABLE IF NOT EXISTS HeadChefData ( 
+    CREATE TABLE IF NOT EXISTS `HeadChefData` ( 
         head_chef_id int UNSIGNED NOT NULL PRIMARY KEY,
         login_logo varchar(30),
         header_logo varchar(30),
         app_icon varchar(30),
         theme_color varchar(7),
         FOREIGN KEY (head_chef_id) REFERENCES Chefs(id) ON DELETE CASCADE 
-    ) ENGINE=InnoDB
+    ) ENGINE=InnoDB;
 
     -- test1
     -- test2
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS Chefs (
     -- Note: make default theme so that if we delete a head chef the chefs underneath him/her have somewhere else to go according to a theme
 
 -- @ Recipes
-CREATE TABLE IF NOT EXISTS Recipes (
+CREATE TABLE IF NOT EXISTS `Recipes` (
     id int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title varchar(50) NOT NULL, 
     description varchar(255),
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS Recipes (
         -- help tooltips to explain what each field is and does
 
 -- @ Images
-CREATE TABLE IF NOT EXISTS Images (
+CREATE TABLE IF NOT EXISTS `Images` (
     id int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     image_name varchar(25) NOT NULL,
     sort tinyint(1) DEFAULT 10,
@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS Images (
     -- Note: when copping a recipe make sure that images are also duplicated and renamed for the new recipe that way on deleting a chef you don't delete the new images on the new recipe
 
 -- @ Reviews
-CREATE TABLE IF NOT EXISTS Reviews (
+CREATE TABLE IF NOT EXISTS `Reviews` (
     id int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title varchar(25),	
     review varchar(255),
@@ -109,25 +109,25 @@ CREATE TABLE IF NOT EXISTS Reviews (
 ) ENGINE=InnoDB;
 
 -- @ TryLater
-CREATE TABLE IF NOT EXISTS TryLater ( 
+CREATE TABLE IF NOT EXISTS `TryLater` ( 
     chef_id int UNSIGNED NOT NULL,
     recipe_id int UNSIGNED NOT NULL,
     PRIMARY KEY (chef_id, recipe_id),
     FOREIGN KEY(chef_id) REFERENCES Chefs(id) ON DELETE CASCADE,
     FOREIGN KEY (recipe_id) REFERENCES Recipes(id) ON DELETE CASCADE 
-) ENGINE=InnoDB
+) ENGINE=InnoDB;
 
 -- @ MyFavorites
-CREATE TABLE IF NOT EXISTS MyFavorites ( 
+CREATE TABLE IF NOT EXISTS `MyFavorites` ( 
     chef_id int UNSIGNED NOT NULL,
     recipe_id int UNSIGNED NOT NULL,
     PRIMARY KEY (chef_id, recipe_id),
     FOREIGN KEY(chef_id) REFERENCES Chefs(id) ON DELETE CASCADE,
     FOREIGN KEY (recipe_id) REFERENCES Recipes(id) ON DELETE CASCADE 
-) ENGINE=InnoDB
+) ENGINE=InnoDB;
 
 -- @ Cookbooks
-CREATE TABLE IF NOT EXISTS Cookbooks (
+CREATE TABLE IF NOT EXISTS `Cookbooks` (
     id int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title varchar(50) NOT NULL,
     chef_id int UNSIGNED NOT NULL,
@@ -136,55 +136,55 @@ CREATE TABLE IF NOT EXISTS Cookbooks (
     FOREIGN KEY(chef_id) REFERENCES Chefs(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
-    CREATE TABLE IF NOT EXISTS CookbooksToRecipes ( 
+    CREATE TABLE IF NOT EXISTS `CookbooksToRecipes` ( 
         cookbook_id int UNSIGNED NOT NULL,
         recipe_id int UNSIGNED NOT NULL,
         PRIMARY KEY (cookbook_id, recipe_id),
         FOREIGN KEY (cookbook_id) REFERENCES Cookbooks(id) ON DELETE CASCADE,
         FOREIGN KEY(recipe_id) REFERENCES Recipes(id) ON DELETE CASCADE
-    ) ENGINE=InnoDB
+    ) ENGINE=InnoDB;
 
 -- @ Tags
-CREATE TABLE IF NOT EXISTS Tags (
+CREATE TABLE IF NOT EXISTS `Tags` (
     id int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name varchar(35) UNIQUE NOT NULL
 ) ENGINE=InnoDB;
 
-    CREATE TABLE IF NOT EXISTS RecipesToTags ( 
+    CREATE TABLE IF NOT EXISTS `RecipesToTags` ( 
         tag_id int UNSIGNED NOT NULL,
         recipe_id int UNSIGNED NOT NULL,
         PRIMARY KEY (tag_id, recipe_id),
         FOREIGN KEY (tag_id) REFERENCES Tags(id) ON DELETE CASCADE,
         FOREIGN KEY(recipe_id) REFERENCES Recipes(id) ON DELETE CASCADE
-    ) ENGINE=InnoDB
+    ) ENGINE=InnoDB;
 
 -- @ Categories
-CREATE TABLE IF NOT EXISTS Categories (
+CREATE TABLE IF NOT EXISTS `Categories` (
     id int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name varchar(35) UNIQUE NOT NULL
 ) ENGINE=InnoDB;
 
-    CREATE TABLE IF NOT EXISTS RecipesToCategories ( 
+    CREATE TABLE IF NOT EXISTS `RecipesToCategories` ( 
         cat_id int UNSIGNED NOT NULL,
         recipe_id int UNSIGNED NOT NULL,
         PRIMARY KEY (cat_id, recipe_id),
         FOREIGN KEY (cat_id) REFERENCES Categories(id) ON DELETE CASCADE,
         FOREIGN KEY(recipe_id) REFERENCES Recipes(id) ON DELETE CASCADE
-    ) ENGINE=InnoDB
+    ) ENGINE=InnoDB;
 
 -- @ Allergies
-CREATE TABLE IF NOT EXISTS Allergies (
+CREATE TABLE IF NOT EXISTS `Allergies` (
     id int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name varchar(35) UNIQUE NOT NULL
 ) ENGINE=InnoDB;
 
-    CREATE TABLE IF NOT EXISTS RecipesToAllergies ( 
+    CREATE TABLE IF NOT EXISTS `RecipesToAllergies` ( 
         allergy_id int UNSIGNED NOT NULL,
         recipe_id int UNSIGNED NOT NULL,
         PRIMARY KEY (allergy_id, recipe_id),
         FOREIGN KEY (allergy_id) REFERENCES Allergies(id) ON DELETE CASCADE,
         FOREIGN KEY(recipe_id) REFERENCES Recipes(id) ON DELETE CASCADE
-    ) ENGINE=InnoDB
+    ) ENGINE=InnoDB;
 
 
 
