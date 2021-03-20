@@ -14,7 +14,7 @@
 
         // connecting tables
         static protected $otherTables = [
-            "CookbooksToRecipes" => "
+            "cookbooksToRecipes" => "
                 CREATE TABLE IF NOT EXISTS CookbooksToRecipes ( 
                     cookbook_id int UNSIGNED NOT NULL,
                     recipe_id int UNSIGNED NOT NULL,

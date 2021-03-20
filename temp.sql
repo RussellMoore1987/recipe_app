@@ -11,8 +11,6 @@
 
 -- Список Дел:
     -- check to make sure both seeding process works
-    -- put `` around table names or chang class table names
-    -- ! add classes, traits, QSL, and all tables, then do the cartetion inserts
     -- testing to make sure all Cascade deletes work
    
 

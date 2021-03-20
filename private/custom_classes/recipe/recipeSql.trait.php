@@ -23,7 +23,7 @@
 
         // connecting tables
         static protected $otherTables = [
-            "TryLater" => "
+            "tryLater" => "
                 CREATE TABLE IF NOT EXISTS TryLater ( 
                     chef_id int UNSIGNED NOT NULL,
                     recipe_id int UNSIGNED NOT NULL,
@@ -32,7 +32,7 @@
                     FOREIGN KEY (recipe_id) REFERENCES Recipes(id) ON DELETE CASCADE 
                 ) ENGINE=InnoDB
             ",
-            "MyFavorites" => "
+            "myFavorites" => "
                 CREATE TABLE IF NOT EXISTS MyFavorites ( 
                     chef_id int UNSIGNED NOT NULL,
                     recipe_id int UNSIGNED NOT NULL,

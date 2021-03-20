@@ -8,7 +8,7 @@
     class Recipe extends DatabaseObject {
         // @ class database information start
             // table name
-            static protected $tableName = "Recipes";
+            static protected $tableName = "recipes";
             // db columns
             static protected $columns = ['id', 'title', 'description', 'cook_time', 'prep_time', 'total_time', 'num_serving', 'is_private', 'status', 'chef_id', 'directions', 'ingredients', 'main_image', 'average_rating', 'created_date'];
             // values to exclude on normal updates, should always include id

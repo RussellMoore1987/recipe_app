@@ -7,7 +7,7 @@
         // @ class database information start
             // Class specific properties. Overwritten from DatabaseObject Class
             // Name of the table
-            static protected $tableName = "Cookbooks";
+            static protected $tableName = "cookbooks";
             // db columns
             static protected $columns = ['id', 'title', 'chef_id', 'is_private', 'cookbook_image'];
             // values to exclude on normal updates, should always include id

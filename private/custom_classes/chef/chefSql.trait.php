@@ -16,7 +16,7 @@
 
         // connecting tables
         static protected $otherTables = [
-            "HeadChefData" => "
+            "headChefData" => "
                 CREATE TABLE IF NOT EXISTS HeadChefData ( 
                     head_chef_id int UNSIGNED NOT NULL PRIMARY KEY,
                     login_logo varchar(30),
