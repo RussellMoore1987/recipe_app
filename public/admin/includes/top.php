@@ -2,6 +2,8 @@
     // check to see if page title was sent
     $pageTitle = $pageTitle ?? "Default Page";
 
+    $noHeader = $noHeader ?? '';
+
     // some variables to help theme pages
     $logoutLink = PUBLIC_LINK_PATH . '/login.php?logout=yes&themeId=' . $_SESSION['themeId'];
     $appIcon = IMAGE_LINK_PATH . "/original/{$_SESSION['appIcon']}";
@@ -43,6 +45,17 @@
     <div class="outer-wrapper">
 
         <!-- // # Nav Start, with the structure of the page it is best to have navigation here -->
+            <!-- header -->
+            <?php if (strlen($noHeader) == 0) {?>
+                <header>
+                    <div>
+                        <a href="my_kitchen">
+                            <img class="logo" src="<?php echo $headerLogo; ?>" alt="Main Logo ">
+                        </a>
+                    </div>
+                </header>
+            <?php } ?>
+
             <!-- bottom bar, putting it here helps to load first -->
             <nav class="bottom-bar-menu flex-sb">
                 <a href="my_kitchen">My Kitchen</a>
@@ -81,13 +94,15 @@
                 <a href="my_kitchen">About This App</a>
             </nav>
             <!-- side bar menu helpers -->
-            <div class="side-bar-menu-icon">
-                <i class="fal fa-bars"></i>
-            </div>
-            <div class="side-bar-modal"></div>
+            <?php if (strlen($noHeader) == 0) {?>
+                <div class="side-bar-menu-icon">
+                    <i class="fal fa-bars"></i>
+                </div>
+                <div class="side-bar-modal"></div>
+            <?php } ?>
         <!-- // # Nav End -->
         
-        <!-- // # Container Start -->
-        <div class="container">
+        <!-- // # App Container Start -->
+        <div class="app-container <?php echo $noHeader; ?>">
 
     

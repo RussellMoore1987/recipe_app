@@ -163,6 +163,14 @@
                     $this->fullDate = NULL;
                 } 
             }
+
+            // get image path with recorded reference image name
+            public function get_image_path($type = 'small') {
+                // get path // * image_paths located at: root/private/rules_docs/reference_information.php
+                $path = get_image_path($type);
+                // return image path with name
+                return "{$path}/{$this->main_image}";
+            }
         // @ methods end
     }
 ?>

@@ -1,5 +1,5 @@
     </div> 
-    <!-- // # Container End -->
+    <!-- // # App Container End -->
 
 </div>
 <!-- // # Outer Wrapper End -->

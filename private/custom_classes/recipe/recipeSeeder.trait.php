@@ -37,10 +37,10 @@
                 'is_private' => rand(1,100) > 80 ? 1 : 0,
                 'status' => rand(1,100) > 90 ? 0 : 1,
                 'chef_id' => $chef, 
-                'directions' => $Seeder->max_char($Seeder->paragraphs(rand(1,5)), 65000, "."),
+                'directions' => $Seeder->max_char($Seeder->paragraphs(rand(1,3)), 65000, "."),
                 'ingredients' => json_encode($ingredients),
                 'main_image' => $main_image,
-                'average_rating' => rand(0,5),
+                'average_rating' => rand(0,5) . '.' . rand(0,99),
                 'created_date' => $Seeder->date()
             ];
 

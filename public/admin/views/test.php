@@ -1,8 +1,8 @@
 <?php
 
 
-$tables = DevTool::devTool_get_all_non_class_tables('');
-var_dump($tables);
+// $tables = DevTool::devTool_get_all_non_class_tables('');
+// var_dump($tables);
 
 // echo password_hash('test1', PASSWORD_BCRYPT);
 // echo '<br><br>';
@@ -125,3 +125,29 @@ var_dump($tables);
 <br>
 Url link: <a href="test?tagId=<?php echo $id; ?>">Get tag with id of <?php echo $id; ?></a>
 <br>======================================================================================================<br> -->
+
+
+<!-- <div class="magic-container">
+  <div class="app-container"> 
+    <div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+    </div>
+  </div>
+</div> -->

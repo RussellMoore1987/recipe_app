@@ -16,8 +16,11 @@ sideBar = function() {
     }
 }
 // side bar function click handlers
-document.querySelector('.side-bar-menu-icon').addEventListener("click", sideBar);
-document.querySelector('.side-bar-modal').addEventListener("click", sideBar);
+const sidebar = document.querySelector('.side-bar-menu-icon');
+if (sidebar) {
+    document.querySelector('.side-bar-menu-icon').addEventListener("click", sideBar);
+    document.querySelector('.side-bar-modal').addEventListener("click", sideBar);
+}
 
 // # =================================================
 // # bottom bar nav

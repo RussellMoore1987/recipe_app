@@ -10,7 +10,6 @@
 
 
 -- Список Дел:
-    -- check to make sure both seeding process works
     -- testing to make sure all Cascade deletes work
    
 
@@ -200,7 +199,14 @@ CREATE TABLE IF NOT EXISTS `Allergies` (
 
 -- test sql for fun 
 -- get recipes and ratings
-SELECT r.title, AVG(rating)
+SELECT r.title, AVG(re.rating)
+FROM Recipes AS r
+    INNER JOIN Reviews AS re
+        ON r.id = re.recipe_id
+GROUP BY r.id, r.title;
+
+-- get recipes and rating count
+SELECT r.title, COUNT(re.rating)
 FROM Recipes AS r
     INNER JOIN Reviews AS re
         ON r.id = re.recipe_id
