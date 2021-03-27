@@ -1,5 +1,5 @@
 <?php
-    // include api trait
+    // include traits
     require_once("chefSql.trait.php");
     require_once("chefSeeder.trait.php");
 
