@@ -136,7 +136,68 @@
         // @ class traits end
         
         // @ class specific queries start
-            
+            // Dynamic recipe searching
+            public static function recipe_search(int $chefId, array $cookTime = [], array $stars = [], array $favorites = [], array $categories = [], array $tags = [], array $allergies = [], array $prepTime = [])
+            {
+                $sql = "SELECT DISTINCT r.id, r.title, r.description, r.main_image, r.average_rating \n";
+                $sql .= "FROM recipes r \n";
+                if(count($categories) > 0){
+                    $sql .= "JOIN recipestocategories rc ON r.id = rc.recipe_id \n";
+                    $sql .= "JOIN categories c ON c.id = rc.cat_id \n";
+                }
+                if(count($tags) > 0){
+                    $sql .= "JOIN recipestotags rt ON r.id = rt.recipe_id \n";
+                    $sql .= "JOIN tags t ON t.id = rt.tag_id \n";
+                }
+                if(count($allergies) > 0){
+                    $sql .= "JOIN recipestoallergies ra ON r.id = ra.recipe_id \n";
+                    $sql .= "JOIN allergies a ON a.id = ra.allergy_id \n";
+                }
+                if(count($favorites) > 0) {
+                    $sql .= "JOIN myFavorites f ON r.id = f.recipe_id \n";
+                }
+                $sql .= "WHERE r.is_private = 0 OR r.chef_id = $chefId \n";
+                if (count($cookTime) > 0) {
+                    $sql .= "AND r.cook_time BETWEEN $cookTime[0] AND $cookTime[1] \n";
+                }
+                if (count($stars) > 0) {
+                    $sql .= "AND r.average_rating BETWEEN $stars[0] AND $stars[1]\n";            
+                }
+                if (count($favorites) > 0) {
+                    $sql .= "AND f.chef_id = $chefId \n";
+                }
+                if (count($categories) > 0) {
+                    $inVals = "";
+                    foreach($categories as $val){
+                        $inVals .= "$val,";
+                    }
+                // @ methods end
+                    $inVals = rtrim($inVals, ',');
+                    $sql .= "AND c.id IN ($inVals) \n";
+                }
+                if (count($tags) > 0) {
+                    $inVals = "";
+                    foreach($tags as $val){
+                        $inVals .= "$val,";
+                    }
+                    $inVals = rtrim($inVals, ',');
+                    $sql .= "AND t.id IN ($inVals) \n";
+                }
+                if (count($allergies) > 0) {
+                    $inVals = "";
+                    foreach($allergies as $val){
+                        $inVals .= "$val,";
+                    }
+                    $inVals = rtrim($inVals, ',');
+                    $sql .= "AND a.id IN ($inVals) \n";
+                }
+                if (count($prepTime) > 0) {
+                    $sql .= "AND r.prep_time BETWEEN $prepTime[0] AND $prepTime[1] \n";
+                }
+
+                // printf('<pre>' . $sql . '</pre>');
+                return self::find_by_sql($sql);
+            }
         // @ class specific queries end
         
         // @ methods start
