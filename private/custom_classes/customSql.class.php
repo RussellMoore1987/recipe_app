@@ -117,7 +117,22 @@
                 "insertConnectingTableInfo2" => "
                     INSERT INTO HeadChefData (head_chef_id, login_logo, header_logo, app_icon, theme_color)
                     VALUES (2, 'login_logo_2.png', 'header_logo_2.png', 'app_icon_2.ico', '#608171')
-                "
+                ",
+                "insertCategories1" => "
+                    INSERT INTO Categories (name) VALUES ('Dinner')
+                ",
+                "insertCategories2" => "
+                    INSERT INTO Categories (name) VALUES ('Lunch')
+                ",
+                "insertCategories3" => "
+                    INSERT INTO Categories (name) VALUES ('Breakfast')
+                ",
+                "insertCategories4" => "
+                    INSERT INTO Categories (name) VALUES ('Soups')
+                ",
+                "insertCategories5" => "
+                    INSERT INTO Categories (name) VALUES ('Breads')
+                ",
             ];
         // @ creation helper methods end
 

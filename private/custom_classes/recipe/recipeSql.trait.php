@@ -6,18 +6,26 @@
                 id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
                 title varchar(50) NOT NULL, 
                 description varchar(255),
-                cook_time tinyint(1),
-                prep_time tinyint(1),
-                total_time tinyint(1),
+                cook_time smallint,
+                prep_time smallint,
+                total_time smallint,
                 num_serving tinyint(1),
                 is_private tinyint(1) DEFAULT 0,
-                status tinyint(1) DEFAULT 1,
+                is_published tinyint(1) DEFAULT 1,
                 chef_id int unsigned NOT NULL,
                 directions TEXT NOT NULL,
                 ingredients JSON NOT NULL,
                 main_image varchar(25),
                 average_rating decimal(2,1)	DEFAULT 0,
-                created_date DATE NOT NULL
+                created_date DATE NOT NULL,
+                KEY chef_id (chef_id),
+                KEY cook_time (cook_time),
+                KEY prep_time (prep_time),
+                KEY average_rating (average_rating),
+                KEY total_time (total_time),
+                KEY is_published (is_published),
+                KEY is_private (is_private),
+                FOREIGN KEY(chef_id) REFERENCES Chefs(id) ON DELETE CASCADE
             ) ENGINE=InnoDB
         ";
 

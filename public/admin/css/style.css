@@ -127,6 +127,24 @@ svg{
     background-color: transparent;
 }
 
+.side-scroll-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.side-scroll-container {
+    position: absolute;
+    top: 7px;
+    left: 0;
+    width: 100%;
+    height: 100%; 
+    padding-top: 10px; 
+    overflow: hidden;
+    overflow-x: scroll; 
+}
+
 /* ============================================================== */
 /* header */
 /* ============================================================== */
@@ -186,7 +204,7 @@ header {
 
 .menu-icon .main {
     stroke-dasharray: 25 100;
-    stroke-dashoffset: -3;
+    stroke-dashoffset: -4;
 }
 
 /* menu stage 3 */
@@ -260,7 +278,7 @@ header {
 }
 
 .side-bar-menu .menu-item span:nth-of-type(2) {
-    padding: 0px 0px 0px 5px;
+    padding: 0px 0px 0px 10px;
 }
 
 .side-bar-menu .menu-item span:nth-of-type(1) {
@@ -324,7 +342,7 @@ header {
 .chef-add-menu {
     position: absolute;
     bottom: 115px;
-    left: calc(50% - 80px);
+    left: calc(50% - 115px);
     padding: 20px 15px;
     width: 230px;
     background-color: #ffffff;
@@ -406,6 +424,26 @@ header {
 .bottom-bar-menu-item.active svg{
     fill: var(--theme-color, #B2A57C);
 }
+
+.bottom-bar-menu-item.active .bottom-add-link svg{
+    fill: #9d9d9d;
+}
+
+.bottom-bar-menu-item .bottom-add-link {
+    position: relative;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 23% 77%;
+    margin: 5px 0px;
+    padding: 5px;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.bottom-bar-menu-item .bottom-add-link:hover svg,
+.bottom-bar-menu-item .bottom-add-link svg:hover{
+    fill: var(--theme-color, #B2A57C);
+}
 /* ============================================================== */
 /* recipe */
 /* ============================================================== */
@@ -428,12 +466,6 @@ header {
     margin: 10px 0px 5px;
 }
 
-.recipe-list span{
-    display: block;
-    color: #C9C9C9;
-    font-size: 13px;
-}
-
 .recipe-list .recipe-list-img {
     width: 93px;
     height: 93px;
@@ -449,8 +481,19 @@ header {
     padding: 0px 10px;
 }
 
-span.rating {
+.rating {
     color: var(--theme-color, #B2A57C);
+}
+
+.small-rating {
+    color: var(--theme-color, #B2A57C);
+    font-size: 13px;
+}
+
+.recipe-description {
+    display: block;
+    color: #C9C9C9;
+    font-size: 13px;
 }
 
 .recipe-container .recipe-img {
@@ -552,4 +595,65 @@ button {
 .login input[type=email],
 .login button {
     margin: 10px 0;
+}
+
+/* ============================================================== */
+/* my kitchen */
+/* ============================================================== */
+
+.size-my-favorites {
+    height: 265px;
+}
+
+.my-favorite-size {
+    width: 2500px;
+    padding-left: 15px;
+}
+
+.my-favorite {
+    position: relative;
+    width: 225px;
+    height: 225px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 15px;
+    box-shadow: 0px 7px 16px rgb(0 0 0 / 21%);
+}
+
+.my-favorite > div{
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.my-favorite h3 {
+    color: var(--theme-color, #B2A57C);
+    font-style: italic;
+    margin: 5px 0px;
+}
+
+.my-favorite::after {
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 130px;
+    content: '';
+    border-radius: 14px;
+    background-image: linear-gradient(rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 60%, rgba(255, 255, 255, 0));
+}
+
+.size-category-links {
+    height: 80px;
+}
+
+.category-links-size {
+    width: 600px;
+    padding-left: 15px;
 }

@@ -26,6 +26,10 @@
                 // for images
                 $randNum = rand(1,33);
                 $main_image = "image{$randNum}.jpg";
+                $average_rating = rand(0,5) . '.' . rand(0,9);
+                if ($average_rating > 5) {
+                    $average_rating = 5;
+                }
             // build array
             $seederInfo = [
                 'title' => ucfirst($Seeder->max_char($Seeder->min_char($Seeder->words(rand(1,3)), 2), 50)),
@@ -35,12 +39,12 @@
                 'total_time' => $cook_time + $prep_time,
                 'num_serving' => rand(1,10),
                 'is_private' => rand(1,100) > 80 ? 1 : 0,
-                'status' => rand(1,100) > 90 ? 0 : 1,
+                'is_published' => rand(1,100) > 90 ? 0 : 1,
                 'chef_id' => $chef, 
                 'directions' => $Seeder->max_char($Seeder->paragraphs(rand(1,3)), 65000, "."),
                 'ingredients' => json_encode($ingredients),
                 'main_image' => $main_image,
-                'average_rating' => rand(0,5) . '.' . rand(0,99),
+                'average_rating' => $average_rating,
                 'created_date' => $Seeder->date()
             ];
 

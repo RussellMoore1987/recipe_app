@@ -51,7 +51,7 @@
                 $addRecipe = Component::bottom_add_icon_component('add-recipe');
 
                 echo "
-                    <a class=\"bottom-bar-menu-item chef-add\">
+                    <div class=\"bottom-bar-menu-item chef-add\">
                         <div class=\"bottom-bar-item-icon-container\">
                             <button class=\"bottom-bar-item-btn\">
                                 {$svg}
@@ -66,7 +66,7 @@
                             . $addCookbook
                             . $addRecipe .
                         "</div>  
-                    </a>
+                    </div>
                 ";
             } else {
                 echo "
@@ -134,7 +134,7 @@
             }
             // output component
             $output = "
-                <a href=\"{$link}\" class=\"\">
+                <a href=\"{$link}\" class=\"bottom-add-link\">
                     <span class=\"\">
                         {$svg}
                     </span>

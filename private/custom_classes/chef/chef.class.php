@@ -108,6 +108,33 @@
             return $themeInfo;
         }
 
+        // get
+        public function get_my_favorites(array $sqlOptions = []) {
+            // get list of my favorites recipes
+            $chefId = $this->id;
+            $sql = "
+                SELECT recipe_id
+                FROM myfavorites
+                WHERE chef_id = 1
+            ";
+            $result = DatabaseObject::run_sql($sql);
+            
+            // loop through query
+            $recipeIds = [];
+            while ($record = $result->fetch_assoc()) {
+                $recipeIds[] = $record['recipe_id'];    
+            }
+            $recipeIds = $recipeIds ? implode(',', $recipeIds) : NULL;
+
+            $sqlOptions['columnOptions'] = $sqlOptions['columnOptions'] ?? '*';
+            $sqlOptions['whereOptions'] = $sqlOptions['whereOptions'] ?? [];
+            $sqlOptions['whereOptions'][] = "id IN($recipeIds)";
+            $sqlOptions['sortingOptions'] = $sqlOptions['sortingOptions'] ?? [];
+            $Recipes = Recipe::find_where($sqlOptions);
+
+            // return data
+            return $Recipes;
+        }
         // @ class specific queries end
 
     }
