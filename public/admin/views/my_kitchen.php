@@ -16,7 +16,7 @@
 
 <div class="side-scroll-wrapper size-my-favorites">
     <div class="side-scroll-container">
-        <div class="my-favorite-size flex-sb">
+        <div class="my-favorite-size flex-sa">
             <?php 
                 foreach ($MyFavoriteRecipes as $Recipe) {
                 // $Recipe->my_favorite_component();
@@ -37,12 +37,12 @@
 
 <div class="side-scroll-wrapper size-category-links">
     <div class="side-scroll-container">
-        <div class="category-links-size flex-sb">
+        <div class="category-links-size flex-sa">
             <?php 
                 foreach ($TopCategories as $Category) {
             ?>
-                <a href="my_kitchen?category_ids=<?php echo $Category->id; ?>" class="top-cat">
-                    <img src="<?php echo IMAGE_LINK_PATH . "/original/topcat{$Category->id}.jpg"; ?>" alt="">   
+                <a href="my_kitchen?category_ids=<?php echo $Category->id; ?>" class="top-cat flex-center-vertical">
+                    <img src="<?php echo IMAGE_LINK_PATH . "/original/top-cat{$Category->id}.jpg"; ?>" alt="">   
                     <h3><?php echo $Category->name; ?></h3>
                 </a>
             <?php }?>

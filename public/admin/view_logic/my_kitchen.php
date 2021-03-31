@@ -19,6 +19,6 @@
     // get top categories
         // reset sqlOptions to we don't get other stuff
         $sqlOptions = [];
-        $sqlOptions['whereOptions'] = ["id <= 5"];
+        $sqlOptions['whereOptions'] = ["id <= 6"];
         $TopCategories = Category::find_where($sqlOptions);
 ?>

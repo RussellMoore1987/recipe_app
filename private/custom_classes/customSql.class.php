@@ -119,18 +119,21 @@
                     VALUES (2, 'login_logo_2.png', 'header_logo_2.png', 'app_icon_2.ico', '#608171')
                 ",
                 "insertCategories1" => "
-                    INSERT INTO Categories (name) VALUES ('Dinner')
+                    INSERT INTO Categories (name) VALUES ('Dessert')
                 ",
                 "insertCategories2" => "
-                    INSERT INTO Categories (name) VALUES ('Lunch')
+                    INSERT INTO Categories (name) VALUES ('Dinner')
                 ",
                 "insertCategories3" => "
-                    INSERT INTO Categories (name) VALUES ('Breakfast')
+                    INSERT INTO Categories (name) VALUES ('Lunch')
                 ",
                 "insertCategories4" => "
-                    INSERT INTO Categories (name) VALUES ('Soups')
+                    INSERT INTO Categories (name) VALUES ('Breakfast')
                 ",
                 "insertCategories5" => "
+                    INSERT INTO Categories (name) VALUES ('Soups')
+                ",
+                "insertCategories6" => "
                     INSERT INTO Categories (name) VALUES ('Breads')
                 ",
             ];

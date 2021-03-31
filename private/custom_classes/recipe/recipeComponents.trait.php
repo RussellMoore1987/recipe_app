@@ -43,6 +43,7 @@
 
         // gets the stars for recipes
         public function get_stars() {
+            $stars = [];
             for ($i=0; $i < floor($this->average_rating); $i++) { 
                 $stars[] = '<i class="fal fa-star"></i>';
             }
