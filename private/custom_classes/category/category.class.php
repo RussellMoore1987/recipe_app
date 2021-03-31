@@ -41,7 +41,11 @@
         // @ class traits end
 
         // @ class specific queries start
-            
+            // TODO-SHAWN: adjust
+            static public function get_all_categories() {
+                $sql = "SELECT id, name FROM categories ";
+                return get_key_value_array(self::find_by_sql($sql));    
+            }
         // @ class specific queries end
     }
     

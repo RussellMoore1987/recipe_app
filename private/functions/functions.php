@@ -113,7 +113,8 @@ function get_key_value_array($obj_array) {
     // loop through result to create a key value pair array
     foreach ($obj_array as $record) {
         $id = $record->id; 
-        $title = $record->title; 
+        // TODO-SHAWN: Should we do???
+        $title = $record->name; 
         $array[$id] = $title; 
     }
     // sort array alphabetically by title

@@ -1,4 +1,3 @@
-
 <div>
     <div class="error">
         <?php
@@ -7,6 +6,14 @@
                 foreach ($recipe_obj->errors as $error) {
                     echo h($error) . "<br>";
                 }
+            }   
+        ?>
+    </div>
+    <div >
+        <?php
+            // check for messages
+            if (isset($message)) {
+                echo "<span class='message'>{$message}<span>";
             }   
         ?>
     </div>
@@ -129,22 +136,25 @@
         <input type="hidden" name="recipe[chef_id]" value="<?php echo $recipe_obj->chef_id ?? $addUserDefault ?? "";?>">
         <input type="hidden" name="recipe[main_image]" value="<?php echo $recipe_obj->main_image;?>">
         <input type="hidden" name="recipe[average_rating]" value="<?php echo $recipe_obj->average_rating ?? 0;?>">
-
+        <input type="hidden" name="message" value="The recipe has been updated.">
 
         <!-- submit button -->
         <div>
-            <button type="submit" id="submit_button"><?php echo $recipeId == "add" ? "ADD" : "EDIT"; ?> RECIPE</button>
+            <button type="submit" id="submit_button"><?php echo $recipeId == "add" ? "Add" : "Edit"; ?> Recipe</button>
         </div>
         <!-- <div>
             <button type="button" id="update_button">Update</button>
         </div> -->
     </form>
     <form id="main_form" method="post" action='add_edit_recipe'>
+    
     <div>
         <input type="hidden" name="delete">
+        <input type="hidden" name="message" value="The recipe has been deleted.">
         <?php if($recipeId != 'add' && $recipeId > 0): ?>
-        <button type="submit" id="delete_button" name=delete>DELETE</button>
+        <button type="submit" id="delete_button" name=delete>Delete</button>
         <?php endif;?>
+        <a class="nav_button" href="view_recipe?recipe_id=<?php echo $recipeId; ?>">Go Back</a>
     </div>
 
 </div>

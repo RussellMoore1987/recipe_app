@@ -62,7 +62,6 @@ $(document).ready(function() {
         console.log(newFormData)
         $('#recipe_ingredients').val(JSON.stringify(newFormData));
 
-
     });
 
     $('#delete_button').click(function(){

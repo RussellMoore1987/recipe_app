@@ -1,4 +1,5 @@
 <?php
+
     // todo: clean up echos, var_dumps, and var_dump, to remove it from the function/validation function page
     // @ logic for add_edit_POST.php start
         // set page title
@@ -11,6 +12,7 @@
             // this forces the $recipeId to be an integer
             $recipeId = (int) $recipeId;
         }
+
 
 
 
@@ -36,11 +38,12 @@
                 $recipe_obj->delete();
                 // switch categoryId to add
                 $recipe_obj = new recipe();
-
+                
                 $recipeId = "add";
+                $message = $_POST["message"];
             }
 
-
+            
         // # if post request
             if (is_post_request() && isset($_POST["recipe"]) && !isset($_POST["delete"])) { 
                 // if we are in add mode
@@ -57,7 +60,7 @@
 
                 $_POST["recipe"]['status'] = 1;
                 $_POST["recipe"]['created_date'] = 'NOW';
-
+                $message = $_POST["message"];
 
                 // if imageName is passed through set it
                // if (!is_blank($_POST["recipe"]['main_image'])) {
@@ -69,7 +72,7 @@
 
                 $_POST["recipe"]['ingredients'] = json_encode($_POST["recipe"]['ingredients']);
                 // populate new object
-
+                
                 $recipe_obj = new recipe($_POST["recipe"]);
                 // echo "recipe_obj info ***********";
                 // var_dump($recipe_obj);
@@ -83,10 +86,16 @@
                     // get full recipe object
                     $recipe_obj = recipe::find_by_id($recipeId);
                 }
-
+                
             }
             $ingredientsList = $recipe_obj->ingredients;
-            $recipe_obj->ingredients = json_decode(json_decode($ingredientsList, true),true);
+            $newIngredientsList = json_decode($ingredientsList, true);
+            if (gettype($newIngredientsList) == "string"){
+                $recipe_obj->ingredients = json_decode($newIngredientsList, true);
+            }
+            else{
+                $recipe_obj->ingredients = $newIngredientsList;
+            }
             // echo "recipe_obj info ***********";
             // var_dump($recipe_obj);
 

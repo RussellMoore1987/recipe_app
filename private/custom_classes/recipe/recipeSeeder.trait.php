@@ -17,12 +17,12 @@
                 $ingredients = [];
                 for ($i=0; $i < $counter; $i++) { 
                     $ingredient = [];
-                    $ingredient['uom'] = $Seeder->options(['Each', 'Cups', 'Teaspoons', 'Tablespoons',]);
-                    $ingredient['num'] = rand(1,6);
+                    $ingredient['ingredient_whole_amount'] = rand(1,6);
+                    $ingredient['ingredient_partial_amount'] = $Seeder->options([0.0, 0.125, 0.25, 0.33, 0.5. 0.625, 0.667, 0.75, 0.875]);
+                    $ingredient['ingredient_unit'] = $Seeder->options(['count', 'pounds', 'quarts', 'ounces', 'cups', 'tablespoons', 'teaspoons', 'pinch']);
                     $ingredient['ingredient'] = $Seeder->sentences();
                     $ingredients[] = $ingredient;
                 }
-                $main_image = $Seeder->options(['Each', 'Cups', 'Teaspoons', 'Tablespoons',]);
                 // for images
                 $randNum = rand(1,33);
                 $main_image = "image{$randNum}.jpg";
