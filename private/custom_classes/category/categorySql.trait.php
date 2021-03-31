@@ -5,7 +5,7 @@
             CREATE TABLE IF NOT EXISTS Categories (
                 id int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
                 name varchar(35) UNIQUE NOT NULL
-            ) ENGINE=InnoDB;
+            ) ENGINE=InnoDB
         ";
 
         // connecting tables

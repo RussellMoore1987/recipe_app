@@ -10,7 +10,7 @@
             // table name
             static protected $tableName = "Recipes";
             // db columns
-            static protected $columns = ['id', 'title', 'description', 'cook_time', 'prep_time', 'total_time', 'num_serving', 'is_private', 'status', 'chef_id', 'directions', 'ingredients', 'main_image', 'average_rating', 'created_date'];
+            static protected $columns = ['id', 'title', 'description', 'cook_time', 'prep_time', 'total_time', 'num_serving', 'is_private', 'is_published', 'chef_id', 'directions', 'ingredients', 'main_image', 'average_rating', 'created_date'];
             // values to exclude on normal updates, should always include id
             static protected $columnExclusions = ['id'];
             // name specific class properties you wish to included in the API
@@ -43,22 +43,22 @@
                     'name'=>'Recipe Cook Time',
                     'type' => 'int', // type of int
                     'num_min'=> 1, // number min value
-                    'num_max'=> 255, // number max value
-                    'max' => 3 // string length
+                    'num_max'=> 65535, // number max value
+                    'max' => 5 // string length
                 ], 
                 'prep_time' => [
                     'name'=>'Recipe Prep Time',
                     'type' => 'int', // type of int
                     'num_min'=> 1, // number min value
-                    'num_max'=> 255, // number max value
-                    'max' => 3 // string length
+                    'num_max'=> 65535, // number max value
+                    'max' => 5 // string length
                 ], 
                 'total_time' => [
                     'name'=>'Recipe Total Time',
                     'type' => 'int', // type of int
                     'num_min'=> 1, // number min value
-                    'num_max'=> 255, // number max value
-                    'max' => 3 // string length
+                    'num_max'=> 65535, // number max value
+                    'max' => 5 // string length
                 ], 
                 'num_serving' => [
                     'name'=>'Recipe Number of Servings',
@@ -74,8 +74,8 @@
                     'num_max'=> 1, // number max value
                     'max' => 1 // string length
                 ], 
-                'status' => [
-                    'name'=>'Recipe Status',
+                'is_published' => [
+                    'name'=>'Recipe Is Published',
                     'type' => 'int', // type of int
                     'num_min'=> 0, // number min value
                     'num_max'=> 1, // number max value
@@ -162,6 +162,14 @@
                     $this->shortDate = NULL;
                     $this->fullDate = NULL;
                 } 
+            }
+
+            // get image path with recorded reference image name
+            public function get_image_path($type = 'small') {
+                // get path // * image_paths located at: root/private/rules_docs/reference_information.php
+                $path = get_image_path($type);
+                // return image path with name
+                return "{$path}/{$this->main_image}";
             }
         // @ methods end
     }

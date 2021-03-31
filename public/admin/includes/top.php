@@ -2,11 +2,13 @@
     // check to see if page title was sent
     $pageTitle = $pageTitle ?? "Default Page";
 
+    $noHeader = $noHeader ?? '';
+
     // some variables to help theme pages
-    $logoutLink = PUBLIC_LINK_PATH . '/login.php?logout=yes&themeId=' . $_SESSION['themeId'];
     $appIcon = IMAGE_LINK_PATH . "/original/{$_SESSION['appIcon']}";
     $headerLogo = IMAGE_LINK_PATH . "/original/{$_SESSION['headerLogo']}";
     $themeColor = $_SESSION['themeColor'];
+    $imagePath = IMAGE_LINK_PATH . "/original/";
 ?>
 
 <!DOCTYPE html>
@@ -43,51 +45,68 @@
     <div class="outer-wrapper">
 
         <!-- // # Nav Start, with the structure of the page it is best to have navigation here -->
+            <!-- header -->
+            <?php if (strlen($noHeader) == 0) {?>
+                <header>
+                    <div>
+                        <a href="my_kitchen">
+                            <img class="logo" src="<?php echo $headerLogo; ?>" alt="Main Logo ">
+                        </a>
+                    </div>
+                </header>
+            <?php } ?>
+
             <!-- bottom bar, putting it here helps to load first -->
             <nav class="bottom-bar-menu flex-sb">
-                <a href="my_kitchen">My Kitchen</a>
-                <a href="search_all_kitchens">Search</a>
-                <div class="chef-add">
-                    <a class="">
-                        Add
-                        <div class="chef-add-menu">
-                            <a href="add_edit_allergy">Add Allergy</a>
-                            <a href="add_edit_chef">Add Chef</a>
-                            <a href="add_edit_category">Add Category</a>
-                            <a href="add_edit_tag">Add Tag</a>
-                            <a href="add_edit_cookbook">Add Cookbook</a>
-                            <a href="add_edit_recipe">Add Recipe</a>
-                        </div>
-                    </a>
-                </div>
-                <a href="my_Profile">My Profile</a>
+                <?php Component::bottom_bar_icon_component('my-kitchen', $pageTitle) ?>
+                <?php Component::bottom_bar_icon_component('search', $pageTitle) ?>
+                <?php Component::bottom_bar_icon_component('add', $pageTitle) ?>
+                <?php Component::bottom_bar_icon_component('my-profile', $pageTitle) ?>
             </nav>
             <!-- side bar -->
             <nav class="side-bar-menu">
-                <a href="my_Profile">My Profile</a>
-                <a href="my_kitchen">My Kitchen</a>
-                <a href="my_kitchen?filter=favorites">My Favorites</a>
-                <a href="my_kitchen?filter=tryLater">Try Later List</a>
-                <a href="search_all_kitchens">Search All Kitchens</a>
-                <a href="my_Profile">Manage My Recipes</a>
-                <a href="my_Profile?filter=cookbooks">Manage My Cookbooks</a>
-                <a href="manage_categories">Manage Categories</a>
-                <a href="manage_tags">Manage Tags</a>
-                <a href="manage_allergies">Manage Allergies</a>
-                <a href="manage_chefs">Manage My Chefs</a>
-                <a href="<?php echo $logoutLink; ?>">Logout</a>
-
-                <a href="my_kitchen">Use As App</a>
-                <a href="my_kitchen">About This App</a>
+               <div>
+                    <?php Component::sidebar_icon_component('my-profile', $pageTitle) ?>  
+                    <?php Component::sidebar_icon_component('my-kitchen', $pageTitle) ?>  
+                    <?php Component::sidebar_icon_component('my-favorites', $pageTitle) ?>  
+                    <?php Component::sidebar_icon_component('try-later', $pageTitle) ?>  
+                    <?php Component::sidebar_icon_component('search', $pageTitle) ?>  
+                    <?php Component::sidebar_icon_component('my-recipes', $pageTitle) ?>  
+                    <?php Component::sidebar_icon_component('my-cookbooks', $pageTitle) ?>  
+                    <?php Component::sidebar_icon_component('manage-categories', $pageTitle) ?>
+                    <?php Component::sidebar_icon_component('manage-tags', $pageTitle) ?>
+                    <?php Component::sidebar_icon_component('manage-allergies', $pageTitle) ?>
+                    <?php Component::sidebar_icon_component('manage-chefs', $pageTitle) ?>
+                    <?php Component::sidebar_icon_component('logout') ?>
+               </div>
+                <div>
+                    <?php Component::sidebar_icon_component('use-app') ?>
+                    <?php Component::sidebar_icon_component('about') ?>
+                </div>
             </nav>
             <!-- side bar menu helpers -->
-            <div class="side-bar-menu-icon">
-                <i class="fal fa-bars"></i>
-            </div>
-            <div class="side-bar-modal"></div>
+            <?php if (strlen($noHeader) == 0) {?>
+                <div class="side-bar-menu-icon">
+                    <div class="menu-icon-container">
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33.03 24.6" class="menu-icon">
+                            <title>Menu Icon</title>
+                            <g id="Layer_2" data-name="Layer 2">
+                                <g id="Layer_1-2" data-name="Layer 1">
+                                    <path class="cls-1 path" d="M1,5.2H25s6,.25,7-3.75-22,6-31,10"/>
+                                    <path class="cls-1 path" d="M1,18.93H25s6-.25,7,3.75-22-6-31-10"/>
+                                    <line class="cls-1 main" x1="1" y1="11.93" x2="25" y2="11.93"/>
+                                </g>
+                            </g>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="side-bar-modal"></div>
+            <?php } ?>
         <!-- // # Nav End -->
         
-        <!-- // # Container Start -->
-        <div class="container">
+        <!-- // # App Container Start -->
+        <div class="app-container <?php echo $noHeader; ?>">
 
     

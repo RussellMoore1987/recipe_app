@@ -104,6 +104,25 @@
                     $replyInfo['errors'][] = 'There is no SQL structures, could not perform desired action.';
                 }
 
+                // check to see if we need to do extra functionality
+                // get custom SQL creation commands
+                $sqlCreationCommands = self::$sqlCreationCommands;
+                // check to see if we need to run any other SQL insert commands
+                if ($sqlCreationCommands) {
+                    // we got some, make sure the real classes and real commands, then run them
+                    foreach ($sqlCreationCommands as $class => $command) {
+                        // check to see if the class and the command exist
+                        if (class_exists($class) && method_exists($class, $command)) {
+                            // run sql command
+                            $commandResult = $class::$command();
+                            // check for errors and for a success message
+                            $replyInfo = merge_data_arrays($replyInfo, $commandResult);
+                        } else {
+                            $replyInfo['errors'][] = "the \"{$class}\" class does not exist or does not have the \"{$command}\" command/method and it.";
+                        }
+                    }
+                }
+
                 // return request info
                 return $replyInfo;
             }
@@ -170,7 +189,7 @@
                     $replyInfo['errors'][] = 'There were no classes with seeder capabilities. No action was performed.';
                 }
 
-                // check to see if we need to do extra functionality
+                // check to see if we need to do extra functionality 
                 // get custom SQL insert commands
                 $sqlInsertCommands = self::$sqlInsertCommands;
                 // check to see if we need to run any other SQL insert commands

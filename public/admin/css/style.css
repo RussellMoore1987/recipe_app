@@ -23,15 +23,25 @@ body {
     overflow: hidden;
 }
 
-.container {
-    position: relative;
-    width: 100%;
-    max-width: 1300px;
-    min-width: 350px;
+.app-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% + 7px);
+    padding: 80px 0px 80px 0px;
     height: 100vh;
     overflow: hidden;
     overflow-y: scroll;
-    padding: 15px 15px 81px 15px;
+    box-sizing: border-box;
+}
+
+.app-container.no-header {
+    padding: 0px 0px 80px 0px;
+}
+
+.layout-container {
+    width: 100%;
+    padding: 0px 15px;
     box-sizing: border-box;
 }
 
@@ -72,6 +82,25 @@ body {
     width: 100%;
 }
 
+.text-center {
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+    color: #A7A7A7;
+    transition: color 400ms ease-in-out;
+}
+
+a:hover {
+    color: var(--theme-color, #B2A57C);
+}
+
+svg{
+    fill: #9d9d9d;
+    transition: fill 400ms ease-in-out;
+}
+
 /* ====================== scrollbar pieces start ====================== */
 
 /* https://css-tricks.com/custom-scrollbars-in-webkit/ */
@@ -98,12 +127,34 @@ body {
     background-color: transparent;
 }
 
+.side-scroll-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.side-scroll-container {
+    position: absolute;
+    top: 7px;
+    left: 0;
+    width: 100%;
+    height: 100%; 
+    padding-top: 10px; 
+    overflow: hidden;
+    overflow-x: scroll; 
+}
+
 /* ============================================================== */
 /* header */
 /* ============================================================== */
 
 header {
-    height: 50px;
+    z-index: 95;
+    position: absolute;
+    padding: 15px 15px;
+    width: 100%;
+    background-image: linear-gradient(rgb(255, 255, 255) 50%, rgba(255, 255, 255, 0));
     box-sizing: border-box;
 }
 
@@ -125,17 +176,67 @@ header {
     cursor: pointer;
 }
 
+.menu-icon-container {
+    cursor: pointer;
+}
+
+.menu-icon {
+    width: 30px;
+    transform: rotate(180deg);
+}
+
+.menu-icon .cls-1 {
+    stroke: #9d9d9d;
+    stroke-linecap:round;
+    stroke-miterlimit:10;
+    stroke-width:1px;
+    fill:none;
+    transition: all 400ms ease-in-out, stroke 400ms ease-in-out;
+}
+
+/* animations for sidebar icon ========================================================= */
+
+/* menu stage 1 */
+.menu-icon .path {
+    stroke-dasharray: 22 100;
+    stroke-dashoffset: -3;
+}
+
+.menu-icon .main {
+    stroke-dasharray: 25 100;
+    stroke-dashoffset: -4;
+}
+
+/* menu stage 3 */
+.menu-stage-3 .menu-icon .main {
+    stroke-dasharray: 25 100;
+    stroke-dashoffset: 0;
+    transition: stroke-dasharray 400ms ease-in-out 200ms, stroke-dashoffset 400ms ease-in-out 200ms, stroke 400ms ease-in-out;
+}
+
+.menu-stage-3 .menu-icon .path {
+    stroke-dasharray: 12 100;
+    stroke-dashoffset: -57;
+    transition: stroke-dasharray 400ms ease-in-out 200ms, stroke-dashoffset 400ms ease-in-out 200ms, stroke 400ms ease-in-out;
+}
+
 .side-bar-menu {
     z-index: 99;
     position: absolute;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
     top: 0;
-    right: -275px;
-    width: 200px;
-    min-height: 100vh;
-    padding: 80px 20px 20px 20px;
+    right: -300px;
+    width: 270px;
+    height: 100vh;
+    overflow: hidden;
+    overflow-y: scroll;
+    padding: 54px 0px 20px 0px;
     opacity: 0;
     background-color: #ffffff;
     box-shadow: -9px 0px 16px rgb(0 0 0 / 12%);
+    box-sizing: border-box;
     transition: right 400ms ease-in-out, opacity 400ms ease-in-out;
 }
 
@@ -165,8 +266,44 @@ header {
     opacity: 1;
 }
 
-.side-bar-menu a {
-    display: block;
+.side-bar-menu .menu-item {
+    position: relative;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 23% 77%;
+    margin: 5px 0px;
+    padding: 5px;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.side-bar-menu .menu-item span:nth-of-type(2) {
+    padding: 0px 0px 0px 10px;
+}
+
+.side-bar-menu .menu-item span:nth-of-type(1) {
+    padding: 0px 0px 0px 17px;
+}
+
+.side-bar-menu .menu-item:hover svg,
+.side-bar-menu .menu-item svg:hover{
+    fill: var(--theme-color, #B2A57C);
+}
+
+.side-bar-menu .menu-item.active svg,
+.side-bar-menu .menu-item.active {
+    fill: var(--theme-color, #B2A57C);
+    color: var(--theme-color, #B2A57C);
+}
+
+.side-bar-menu .menu-item.active::after {
+    position: absolute;
+    top: calc(50% - 5px);
+    left: 8px;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: var(--theme-color, #B2A57C);
+    content: '';
 }
 
 /* ============================================================== */
@@ -187,6 +324,16 @@ header {
     box-shadow: 0px -3px 16px rgb(0 0 0 / 12%);
 }
 
+.bottom-bar-menu::before {
+    position: absolute;
+    top: -30px;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    content: '';
+    background-image: linear-gradient(rgb(255, 255, 255, 0) 25%, rgba(255, 255, 255));
+}
+
 .chef-add {
     position: relative;
     cursor: pointer;
@@ -194,8 +341,8 @@ header {
 
 .chef-add-menu {
     position: absolute;
-    bottom: 30px;
-    left: -115px;
+    bottom: 115px;
+    left: calc(50% - 115px);
     padding: 20px 15px;
     width: 230px;
     background-color: #ffffff;
@@ -216,27 +363,110 @@ header {
     display: block; 
 }
 
+.bottom-bar-menu-item {
+    position: relative;
+    height: 100%;
+    width: 25%;
+}
+
+.bottom-bar-item-icon-container {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    transition: all 400ms ease-in-out;
+}
+
+.bottom-bar-menu-item.active .bottom-bar-item-icon-container {
+    top: -40px;  
+}
+
+.bottom-bar-item-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 58px;
+    height: 58px;
+    background-color: #ffffff;
+    border: 1px solid #ffffff;
+    border-radius: 50%;
+    margin: 0px;
+    box-shadow: unset;
+    transition: all 400ms ease-in-out;
+}
+
+.bottom-bar-menu-item.active .bottom-bar-item-btn {
+    border-color: var(--theme-color, #B2A57C);
+    box-shadow: 0px 3px 16px rgb(0 0 0 / 12%);
+}
+
+.bottom-bar-item-text {
+    position: absolute;
+    bottom: 4px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    transition: all 400ms ease-in-out;
+}
+
+.bottom-bar-menu-item.active .bottom-bar-item-text {
+    opacity: 1;
+    color: var(--theme-color, #B2A57C);
+}
+
+.bottom-bar-menu-item svg{
+    min-width: 30px;
+}
+
+.bottom-bar-menu-item.active svg{
+    fill: var(--theme-color, #B2A57C);
+}
+
+.bottom-bar-menu-item.active .bottom-add-link svg{
+    fill: #9d9d9d;
+}
+
+.bottom-bar-menu-item .bottom-add-link {
+    position: relative;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 23% 77%;
+    margin: 5px 0px;
+    padding: 5px;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.bottom-bar-menu-item .bottom-add-link:hover svg,
+.bottom-bar-menu-item .bottom-add-link svg:hover{
+    fill: var(--theme-color, #B2A57C);
+}
 /* ============================================================== */
 /* recipe */
 /* ============================================================== */
 
-.recipe > div{
+.recipe-list-link{
+    text-decoration: none;
+}
+
+.recipe-list-link:hover {
+    background-color: #ececec;
+}
+
+.recipe-list > div{
     display: inline-block;
     vertical-align: top;
 }
 
-.recipe h3{
+.recipe-list h3{
     color: #A7A7A7;
     margin: 10px 0px 5px;
 }
 
-.recipe span{
-    display: block;
-    color: #C9C9C9;
-    font-size: 13px;
-}
-
-.recipe .recipe-img {
+.recipe-list .recipe-list-img {
     width: 93px;
     height: 93px;
     margin: 10px 5px 10px 10px;
@@ -247,8 +477,47 @@ header {
     box-shadow: 0px 3px 16px rgb(0 0 0 / 12%);
 }
 
-.recipe .recipe-content {
+.recipe-list .recipe-list-content {
     padding: 0px 10px;
+}
+
+.rating {
+    color: var(--theme-color, #B2A57C);
+}
+
+.small-rating {
+    color: var(--theme-color, #B2A57C);
+    font-size: 13px;
+}
+
+.recipe-description {
+    display: block;
+    color: #C9C9C9;
+    font-size: 13px;
+}
+
+.recipe-container .recipe-img {
+    width: 100%;
+}
+
+.recipe-container .recipe-time {
+    display: grid;
+    text-align: center;
+}
+
+.recipe-img-container {
+    position: relative;
+}
+
+button.recipe-back-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 50px;
+    height: 50px;
+    margin: 0px;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #A7A7A7;
 }
 
 /* ============================================================== */
@@ -299,6 +568,7 @@ button {
     border: unset;
     border-radius: 25px;
     box-shadow: 0px 3px 16px rgb(0 0 0 / 12%);
+    outline: none;
 }
 
 /* ============================================================== */
@@ -325,4 +595,79 @@ button {
 .login input[type=email],
 .login button {
     margin: 10px 0;
+}
+
+/* ============================================================== */
+/* my kitchen */
+/* ============================================================== */
+
+.size-my-favorites {
+    height: 260px;
+}
+
+.my-favorite-size {
+    width: 2500px;
+    padding-left: 5px;
+}
+
+.my-favorite {
+    position: relative;
+    width: 225px;
+    height: 225px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 15px;
+    box-shadow: 3px 4px 12px rgb(0 0 0 / 26%);
+}
+
+.my-favorite > div{
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.my-favorite h3 {
+    color: var(--theme-color, #B2A57C);
+    font-style: italic;
+    margin: 5px 0px;
+}
+
+.my-favorite::after {
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 130px;
+    content: '';
+    border-radius: 14px;
+    background-image: linear-gradient(rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 60%, rgba(255, 255, 255, 0));
+}
+
+.size-category-links {
+    height: 145px;
+}
+
+.category-links-size {
+    width: 1383px;
+    padding-left: 5px;
+}
+
+.top-cat {
+    border-radius: 15px;
+    padding: 15px 25px;
+    box-shadow: 3px 4px 12px rgb(0 0 0 / 26%);
+}
+
+.top-cat h3 {
+    margin: 0 0 0 15px;
+}
+
+.top-cat img {
+    height: 75px;
 }

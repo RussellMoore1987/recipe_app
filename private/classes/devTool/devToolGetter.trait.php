@@ -172,6 +172,14 @@
                     $requestInfo['tables'][] =  $tempTable_array[$tableName];
                 }
 
+                // ! adjusted this function for this recipe app, had some issue with naming conventions for tables decided to do a quick fix
+                foreach ($requestInfo['tables'] as $key => $table) {
+                    if ($table['sql']) {
+                        $realRequestInfo['tables'][] = $table;
+                    }
+                }
+                $requestInfo['tables'] = $realRequestInfo['tables'];
+
                 // return request info
                 return $requestInfo;
             }

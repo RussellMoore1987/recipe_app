@@ -1,5 +1,5 @@
     </div> 
-    <!-- // # Container End -->
+    <!-- // # App Container End -->
 
 </div>
 <!-- // # Outer Wrapper End -->
@@ -8,7 +8,7 @@
 <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
 <!-- // # JS Files -->
-<script src="<?php echo PUBLIC_LINK_PATH . "/admin/js/general.js" ?>"></script>
+<script src="<?php echo PUBLIC_LINK_PATH . "/admin/js/general.js?{$assetVersion}" ?>"></script>
 
 <?php
     // set page specific js if there 

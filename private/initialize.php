@@ -28,7 +28,7 @@
     date_default_timezone_set('America/Denver'); // todo: find a better method so that this will switch automatically
 
     // version for CSS and JavaScript, increment this number upwards to reset CSS and JavaScript caches
-    $assetVersion = 12372;
+    $assetVersion = 12373;
 
     // Autoload class and trait definitions
     function my_autoload($class) {

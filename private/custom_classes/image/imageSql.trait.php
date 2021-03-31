@@ -10,7 +10,7 @@
                 alt varchar(50),
                 recipe_id int UNSIGNED NOT NULL,
                 FOREIGN KEY(recipe_id) REFERENCES Recipes(id) ON DELETE CASCADE
-            ) ENGINE=InnoDB;
+            ) ENGINE=InnoDB
         ";
     }
 ?>

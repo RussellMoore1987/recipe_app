@@ -1,16 +1,20 @@
 <?php
 
-echo password_hash('test1', PASSWORD_BCRYPT);
-echo '<br><br>';
-echo password_hash('test2', PASSWORD_BCRYPT);
-echo '<br><br>';
-echo password_hash('test', PASSWORD_BCRYPT);
+
+// $tables = DevTool::devTool_get_all_non_class_tables('');
+// var_dump($tables);
+
+// echo password_hash('test1', PASSWORD_BCRYPT);
+// echo '<br><br>';
+// echo password_hash('test2', PASSWORD_BCRYPT);
+// echo '<br><br>';
+// echo password_hash('test', PASSWORD_BCRYPT);
 
 // $Chefs = Chef::find_all();
 // var_dump($Chefs);
 
-$Chef = Chef::find_where("email = 'truthandgoodness87@gmail.com'");
-var_dump($Chef);
+// $Chef = Chef::find_where("email = 'truthandgoodness87@gmail.com'");
+// var_dump($Chef);
 
 
 //   $Seeder = new Seeder();
@@ -121,3 +125,29 @@ var_dump($Chef);
 <br>
 Url link: <a href="test?tagId=<?php echo $id; ?>">Get tag with id of <?php echo $id; ?></a>
 <br>======================================================================================================<br> -->
+
+
+<!-- <div class="magic-container">
+  <div class="app-container"> 
+    <div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+    </div>
+  </div>
+</div> -->

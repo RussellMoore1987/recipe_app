@@ -3,7 +3,7 @@
         // @ set up section start
             // # Class List, REST API, Context API, DevTool
                 // * class_list located at: root/private/rules_docs/reference_information.php
-                static protected $classList = ["Chef", "Recipe", "Image", "Allergy", "Category", "Tag"]; // public access use get_class_list()
+                static protected $classList = ['Chef', 'Recipe', 'Image', 'Allergy', 'Category', 'Tag', 'Review', 'Cookbook' ]; // public access use get_class_list()
             // # REST API
                 // * api_documentation located at: root/private/rules_docs/reference_information.php
                 // set over arching API keys, use function to get the key
@@ -15,23 +15,24 @@
                 // main context settings
                 static protected $mainContextInfo = [ 
                     // documentation password, has to be at least eight characters long and have one capital letter, one lowercase letter, one number, and one special symbol, otherwise it doesn't work
-                    'documentationPassword' => "",
+                    'documentationPassword' => '',
                     // TODO: allow Cross-Origin Resource Sharing (CORS), if you are only using the context api internally you should have this as false, if you are using it to populate outside products or pages make sure it is set to true
                     'cors' => false,
                     'devTool' => [
                         // devTool password, has to be at least eight characters long and have one capital letter, one lowercase letter, one number, and one special symbol, otherwise it doesn't work
-                        'username' => "test",
-                        'password' => "Test@the9"
+                        'username' => 'test',
+                        'password' => 'Test@the9'
                     ]
                 ];
             // # SQL connection and other tables, and SQL creation 
                 // * class_list located at: root/private/rules_docs/reference_information.php
                 static protected $otherTablesClassList = []; // public access use get_other_tables_class_list()
-                // TODO: documentation * sql_creation_commands located at: root/private/rules_docs/devTool_docs.php
+                // TODO-CI: documentation * sql_creation_commands located at: root/private/rules_docs/devTool_docs.php
+                // TODO:  documentation * sql_insert_commands located at: root/private/rules_docs/devTool_docs.php
                 // TODO: creation command, deletion command, and individual table commands drop, create, insert
-                // static protected $sqlCreationCommands = ["customSql" => "creation"]; // public access use get_other_tables_class_list()
-                // @ static protected $sqlInsertCommands = ["customSql" => "insert"]; // public access use get_sql_insert_commands()
-                static protected $sqlInsertCommands = []; // public access use get_sql_insert_commands()
+                // TODO-CI: add to CI
+                static protected $sqlCreationCommands = ['customSql' => 'creation']; // public access use get_other_tables_class_list()
+                static protected $sqlInsertCommands = ['customSql' => 'insert']; // public access use get_sql_insert_commands()
             // # Authentication
                 // * authentication located at: root/private/rules_docs/reference_information.php
                 // default static protected $authentication = ['User', 'username', 'hashedPassword', 'id'];
