@@ -137,8 +137,57 @@
         
         // @ class specific queries start
             // Dynamic recipe searching
-            public static function recipe_search(int $chefId, array $cookTime = [], array $stars = [], array $favorites = [], array $categories = [], array $tags = [], array $allergies = [], array $prepTime = [])
-            {
+            public static function recipe_search(int $chefId = 0, array $sqlOptions) {
+
+
+
+
+
+
+                $cookTime = [];
+        $stars = [];
+        $favorites = [];
+        $categories = [];
+        $tags = [];
+        $allergies = [];
+        $prepTime = [];
+        if ($_GET) {
+            # code...
+        }
+        foreach ($_GET as $param => $value){
+            switch ($param): case "cookTime": $cookTime = explode(',', $value); break;
+                case 'stars':
+                    $stars = explode(',', $value);
+                    if(count($stars) == 1){
+                        $first = substr($stars[0], 0, 1) * 1;
+                        $stars = [$first, $first + 1];
+                    }
+                    break;
+                case 'favorites':
+                    $favorites = explode(',', $value);
+                    break;
+                case 'categories':
+                    $categories = explode(',', $value);
+                    break;
+                case 'tags':
+                    $tags = explode(',', $value);
+                    break;
+                case 'allergies':
+                    $allergies = explode(',', $value);
+                    break;
+                case 'prepTime':
+                    $prepTime = explode(',', $value);
+                    break;
+                endswitch;
+        } 
+
+
+
+
+
+
+
+
                 $sql = "SELECT DISTINCT r.id, r.title, r.description, r.main_image, r.average_rating \n";
                 $sql .= "FROM recipes r \n";
                 if(count($categories) > 0){
