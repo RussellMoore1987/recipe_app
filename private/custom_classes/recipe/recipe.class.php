@@ -171,6 +171,111 @@
                 // return image path with name
                 return "{$path}/{$this->main_image}";
             }
+
+            // TODO-SHAWN: Do I need???
+            public function class_clean_up_update(array $array = []){
+                // check properties, only update necessary ones 
+                // echo "class_clean_up_update info ***********";
+                // var_dump($array); 
+                // check to see if catIds were passed in
+                if (isset($array['catIds'])) {
+                    // check to see if the new list and the old list are the same
+                    if (!($array['catIds'] == $array['catIdsOld'])) {
+                        // delete all old connections
+                        $this->delete_connection_records("recipestocategories", "recipe_id", $array['id']);
+                        // if string is blank don't update
+                        if (!(is_blank($array['catIds']))) {
+                            // make the id list into an array
+                            $id_array = explode(",", $array['catIds']);
+                            // loop through and make a record for each id
+                            foreach ($id_array as $value) {
+                                $this->insert_connection_record("recipestocategories", ["recipe_id", "cat_id"], [$array['id'], $value]);
+                            }
+                            // echo "updated!!! posts_to_categories *********** <br>";
+                        }
+                    } 
+                }
+                // check to see if allergyIds were passed in
+                if (isset($array['allergyIds'])) {
+                    // check to see if the new list and the old list are the same
+                    if (!($array['allergyIds'] == $array['allergyIdsOld'])) {
+                        // delete all old connections 
+                        $this->delete_connection_records("recipestoallergies", "recipe_id", $array['id']);
+                        // if string is blank don't update
+                        if (!(is_blank($array['allergyIds']))) {
+                            // make the id list into an array
+                            $id_array = explode(",", $array['allergyIds']);
+                            // loop through and make a record for each id
+                            foreach ($id_array as $value) {
+                                $this->insert_connection_record("recipestoallergies", ["recipe_id", "allergy_id"], [$array['id'], $value]);
+                            }
+                             //echo "updated!!! posts_to_labels *********** <br>";
+                        }
+                    } 
+                }
+
+                // check to see if tagIds were passed in
+                if (isset($array['tagIds'])) {
+                    // check to see if the new list and the old list are the same
+                    if (!($array['tagIds'] == $array['tagIdsOld'])) {
+                        // delete all old connections 
+                        $this->delete_connection_records("recipestotags", "recipe_id", $array['id']);
+                        // if string is blank don't update
+                        if (!(is_blank($array['tagIds']))) {
+                            // make the id list into an array
+                            $id_array = explode(",", $array['tagIds']);
+                            // loop through and make a record for each id
+                            foreach ($id_array as $value) {
+                                $this->insert_connection_record("recipestotags", ["recipe_id", "tag_id"], [$array['id'], $value]);
+                            }
+                            // echo "updated!!! posts_to_tags *********** <br>";
+                        }
+                    } 
+                }
+            }
+
+            // get all extended info
+            public function get_extended_info() {
+                // empty array to hold potential extended information
+                $extendedInfo_array = [];
+                // get tags
+                $extendedInfo_array['tags'] = $this->get_recipe_tags();
+                // get categories
+                $extendedInfo_array['categories'] = $this->get_recipe_categories();
+                // get allergies
+                $extendedInfo_array['allergies'] = $this->get_recipe_allergies();
+                // return data
+                return $extendedInfo_array;    
+            }
+
+            // get tags, main queries for editing
+            public function get_recipe_tags() {
+                $sql = "SELECT t.id, t.name ";
+                $sql .= "FROM tags AS t ";
+                $sql .= "INNER JOIN recipestotags AS rtt ";
+                $sql .= "ON rtt.tag_id = t.id ";
+                $sql .= "WHERE rtt.recipe_id = '" . self::db_escape($this->id) . "' ";
+                // return data
+                return Tag::find_by_sql($sql);     
+            }      
+            public function get_recipe_categories() {
+                $sql = "SELECT c.id, c.name ";
+                $sql .= "FROM categories AS c ";
+                $sql .= "INNER JOIN recipestocategories AS rtc ";
+                $sql .= "ON rtc.cat_id = c.id ";
+                $sql .= "WHERE rtc.recipe_id = '" . self::db_escape($this->id) . "' ";
+                // return data
+                return Category::find_by_sql($sql);     
+            }  
+            public function get_recipe_allergies() {
+                $sql = "SELECT a.id, a.name ";
+                $sql .= "FROM allergies AS a ";
+                $sql .= "INNER JOIN recipestoallergies AS rta ";
+                $sql .= "ON rta.allergy_id = a.id ";
+                $sql .= "WHERE rta.recipe_id = '" . self::db_escape($this->id) . "' ";
+                // return data
+                return Allergy::find_by_sql($sql);     
+            }        
         // @ methods end
     }
 ?>

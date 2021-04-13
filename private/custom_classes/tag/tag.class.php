@@ -39,6 +39,15 @@
             use TagSql;
             use TagSeeder;
         // @ class traits end
+
+        // @ class specific queries start
+            // TODO-SHAWN: adjust
+            static public function get_all_tags() {
+                $sql = "SELECT id, name FROM tags ";
+
+                return get_key_value_array(self::find_by_sql($sql));
+            }
+        // @ class specific queries end
     }
     
 ?>
