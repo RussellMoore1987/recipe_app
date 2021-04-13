@@ -222,3 +222,222 @@ GROUP BY c.id, c.name;
 SELECT recipe_id
 FROM myfavorites
 WHERE chef_id = 1
+
+
+SELECT id, title, is_private, is_published, chef_id
+FROM recipes
+WHERE chef_id = 1 OR is_private = 0
+ORDER BY chef_id;
+
+
+
+SELECT r.id, r.title, r.total_time, r.description, r.main_image, r.average_rating 
+FROM Recipes AS r 
+    INNER JOIN RecipesToCategories AS rc 
+        ON r.id = rc.recipe_id 
+    INNER JOIN Categories AS c 
+        ON c.id = rc.cat_id 
+    INNER JOIN RecipesToTags AS rt 
+        ON r.id = rt.recipe_id 
+    INNER JOIN Tags AS t 
+        ON t.id = rt.tag_id 
+    INNER JOIN RecipesToAllergies AS ra 
+        ON r.id = ra.recipe_id 
+    INNER JOIN Allergies AS a 
+        ON a.id = ra.allergy_id 
+    WHERE c.id = IN () 
+        AND t.id = IN () 
+        AND a.id = IN () 
+        AND (r.is_private = 0 OR r.chef_id = 1) 
+        AND is_published = 1 
+        AND (r.cook_time BETWEEN AND ) 
+        AND r.prep_time BETWEEN AND AND r.total_time BETWEEN AND LIMIT 20 
+-- Query Failed!!!: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'IN () AND t.id = IN () AND a.id = IN () AND (r.is_private = 0 OR r.chef_id = 1) ' at line 1
+
+
+
+-- Testing
+-- TODO: need to do some intense testing when the tool is up and I can perform more exact queries, and have a smaller test set to make sure I filter correctly
+-- max cook_time
+SELECT MAX(cook_time)
+FROM Recipes;
+
+-- simple query testing
+-- * default
+    SELECT r.id, r.title, r.total_time, r.description, r.main_image, r.average_rating 
+    FROM Recipes AS r 
+    WHERE (r.is_private = 0 OR r.chef_id = 1) AND is_published = 1 LIMIT 20
+
+-- * cook_time, 
+    SELECT r.id, r.title, r.total_time, r.description, r.main_image, r.average_rating, r.cook_time 
+    FROM Recipes AS r 
+    WHERE (r.is_private = 0 OR r.chef_id = 1) 
+        AND is_published = 1 
+        AND (r.cook_time BETWEEN 0 AND 10) LIMIT 20
+
+-- * stars
+    SELECT r.id, r.title, r.total_time, r.description, r.main_image, r.average_rating 
+    FROM Recipes AS r 
+    WHERE (r.is_private = 0 OR r.chef_id = 1) 
+        AND is_published = 1 
+        AND (r.cook_time BETWEEN 0 AND 60) 
+        AND r.average_rating >= 4 LIMIT 20
+
+-- * myFavorites
+    SELECT r.id, r.title, r.total_time, r.description, r.main_image, r.average_rating 
+    FROM Recipes AS r 
+        INNER JOIN MyFavorites AS f 
+            ON r.id = f.recipe_id 
+    WHERE is_published = 1 
+        AND f.chef_id = 1 
+        AND (r.is_private = 0 OR r.chef_id = 1) 
+        AND is_published = 1 
+        AND (r.cook_time BETWEEN 0 AND 60) 
+        AND r.average_rating >= 4 LIMIT 20
+
+-- * tryLater
+    SELECT r.id, r.title, r.total_time, r.description, r.main_image, r.average_rating 
+    FROM Recipes AS r 
+        INNER JOIN MyFavorites AS f 
+            ON r.id = f.recipe_id 
+        INNER JOIN TryLater AS tl 
+            ON r.id = tl.recipe_id 
+    WHERE is_published = 1 
+        AND f.chef_id = 1 
+        AND tl.chef_id = 1 
+        AND (r.is_private = 0 OR r.chef_id = 1) 
+        AND is_published = 1 
+        AND (r.cook_time BETWEEN 0 AND 60) 
+        AND r.average_rating >= 4 LIMIT 20
+
+-- * categories
+    SELECT r.id, r.title, r.total_time, r.description, r.main_image, r.average_rating 
+    FROM Recipes AS r 
+        INNER JOIN RecipesToCategories AS rc 
+            ON r.id = rc.recipe_id 
+        INNER JOIN Categories AS c 
+            ON c.id = rc.cat_id 
+        INNER JOIN MyFavorites AS f 
+            ON r.id = f.recipe_id 
+        INNER JOIN TryLater AS tl 
+            ON r.id = tl.recipe_id 
+    WHERE is_published = 1 
+        AND c.id IN (30) 
+        AND f.chef_id = 1 
+        AND tl.chef_id = 1 
+        AND (r.is_private = 0 OR r.chef_id = 1) 
+        AND is_published = 1 
+        AND (r.cook_time BETWEEN 0 AND 60) 
+        AND r.average_rating >= 4 LIMIT 20
+    -- 0
+
+    SELECT r.id, r.title, r.total_time, r.description, r.main_image, r.average_rating 
+    FROM Recipes AS r 
+        INNER JOIN RecipesToCategories AS rc 
+            ON r.id = rc.recipe_id 
+        INNER JOIN Categories AS c 
+            ON c.id = rc.cat_id 
+    WHERE is_published = 1 
+        AND c.id IN (30) 
+        AND (r.is_private = 0 OR r.chef_id = 1) 
+        AND is_published = 1 
+        AND (r.cook_time BETWEEN 0 AND 60) 
+        AND r.average_rating >= 4 LIMIT 20
+    -- 20+
+
+    SELECT MAX(id)
+    FROM Categories;
+
+-- * tags
+    SELECT r.id, r.title, r.total_time, r.description, r.main_image, r.average_rating 
+    FROM Recipes AS r 
+        INNER JOIN RecipesToTags AS rt 
+            ON r.id = rt.recipe_id 
+        INNER JOIN Tags AS t 
+            ON t.id = rt.tag_id 
+    WHERE is_published = 1 
+        AND t.id IN (30) 
+        AND (r.is_private = 0 OR r.chef_id = 1) 
+        AND is_published = 1 LIMIT 20
+
+-- * allergies
+    SELECT r.id, r.title, r.total_time, r.description, r.main_image, r.average_rating 
+    FROM Recipes AS r 
+        INNER JOIN RecipesToAllergies AS ra 
+            ON r.id = ra.recipe_id 
+        INNER JOIN Allergies AS a 
+            ON a.id = ra.allergy_id 
+    WHERE is_published = 1 
+        AND a.id IN (5) 
+        AND (r.is_private = 0 OR r.chef_id = 1) 
+        AND is_published = 1 LIMIT 20
+
+-- * prep_time
+    SELECT r.id, r.title, r.total_time, r.description, r.main_image, r.average_rating FROM Recipes AS r 
+        INNER JOIN RecipesToCategories AS rc 
+            ON r.id = rc.recipe_id 
+        INNER JOIN Categories AS c 
+            ON c.id = rc.cat_id 
+        INNER JOIN RecipesToTags AS rt 
+            ON r.id = rt.recipe_id 
+        INNER JOIN Tags AS t 
+            ON t.id = rt.tag_id 
+        INNER JOIN RecipesToAllergies AS ra 
+            ON r.id = ra.recipe_id 
+        INNER JOIN Allergies AS a 
+            ON a.id = ra.allergy_id 
+        INNER JOIN MyFavorites AS f 
+            ON r.id = f.recipe_id 
+        INNER JOIN TryLater AS tl 
+            ON r.id = tl.recipe_id 
+    WHERE is_published = 1 
+        AND c.id IN (1) 
+        AND t.id IN (15) 
+        AND a.id IN (4) 
+        AND f.chef_id = 1 
+        AND tl.chef_id = 1 
+        AND (r.is_private = 0 OR r.chef_id = 1) 
+        AND is_published = 1 
+        AND (r.cook_time BETWEEN 0 AND 60) 
+        AND r.average_rating >= 4 
+        AND (r.prep_time BETWEEN 0 AND 15) LIMIT 20
+
+-- * total_time
+    SELECT r.id, r.title, r.total_time, r.description, r.main_image, r.average_rating FROM Recipes AS r 
+        INNER JOIN RecipesToCategories AS rc 
+            ON r.id = rc.recipe_id 
+        INNER JOIN Categories AS c 
+            ON c.id = rc.cat_id 
+        INNER JOIN RecipesToTags AS rt 
+            ON r.id = rt.recipe_id 
+        INNER JOIN Tags AS t 
+            ON t.id = rt.tag_id 
+        INNER JOIN RecipesToAllergies AS ra 
+            ON r.id = ra.recipe_id 
+        INNER JOIN Allergies AS a 
+            ON a.id = ra.allergy_id 
+        INNER JOIN MyFavorites AS f 
+            ON r.id = f.recipe_id 
+        INNER JOIN TryLater AS tl 
+            ON r.id = tl.recipe_id 
+    WHERE is_published = 1 
+        AND c.id IN (1) 
+        AND t.id IN (15) 
+        AND a.id IN (4) 
+        AND f.chef_id = 1 
+        AND tl.chef_id = 1 
+        AND (r.is_private = 0 OR r.chef_id = 1) 
+        AND is_published = 1 
+        AND (r.cook_time BETWEEN 0 AND 60) 
+        AND r.average_rating >= 4 
+        AND (r.prep_time BETWEEN 0 AND 60) 
+        AND (r.total_time BETWEEN 0 AND 40) LIMIT 20
+
+
+
+
+
+
+
+
+

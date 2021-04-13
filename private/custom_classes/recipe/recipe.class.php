@@ -137,115 +137,130 @@
         
         // @ class specific queries start
             // Dynamic recipe searching
-            public static function recipe_search(int $chefId = 0, array $sqlOptions) {
+            public static function recipe_search(array $sqlOptions = []) {
+                // setting up default parameters 
+                $chefId = $_SESSION['id'];
+                // TODO: sortBy
+                $sortBy = isset($_GET['sortBy']) ? explode(',', $_GET['sortBy']) : '';
+                $cookTime = isset($_GET['cookTime']) ? explode(',', $_GET['cookTime']) : [];
+                $stars = $_GET['stars'] ?? [];
+                $myFavorites = $_GET['myFavorites'] ?? '';
+                $tryLater = $_GET['tryLater'] ?? '';
+                $categories = isset($_GET['categories']) ? explode(',', $_GET['categories']) : [];
+                $tags = isset($_GET['tags']) ? explode(',', $_GET['tags']) : [];
+                $allergies = isset($_GET['allergies']) ? explode(',', $_GET['allergies']) : [];
+                $prepTime = isset($_GET['prepTime']) ? explode(',', $_GET['prepTime']) : [];
+                $totalTime = isset($_GET['totalTime']) ? explode(',', $_GET['totalTime']) : [];
+                // TODO: validate
+                
+                // prepare the SQL, borrowed code from find where
+                // get options
+                    // check to see if the array is empty
+                    $columnOptions_array = $sqlOptions['columnOptions'] ?? ["*"];
+                    $whereOptions_array = $sqlOptions['whereOptions'] ?? [];
+                    $sortingOptions_array = $sqlOptions['sortingOptions'] ?? [];
 
-
-
-
-
-
-                $cookTime = [];
-        $stars = [];
-        $favorites = [];
-        $categories = [];
-        $tags = [];
-        $allergies = [];
-        $prepTime = [];
-        if ($_GET) {
-            # code...
-        }
-        foreach ($_GET as $param => $value){
-            switch ($param): case "cookTime": $cookTime = explode(',', $value); break;
-                case 'stars':
-                    $stars = explode(',', $value);
-                    if(count($stars) == 1){
-                        $first = substr($stars[0], 0, 1) * 1;
-                        $stars = [$first, $first + 1];
+                    // check for regular string coming in, set to whereOptions_array
+                    if (!(is_array($sqlOptions) && (isset($sqlOptions['columnOptions']) || isset($sqlOptions['whereOptions']) || isset($sqlOptions['sortingOptions'])))) {
+                        // set whereOptions_array
+                        $whereOptions_array = $sqlOptions;
                     }
-                    break;
-                case 'favorites':
-                    $favorites = explode(',', $value);
-                    break;
-                case 'categories':
-                    $categories = explode(',', $value);
-                    break;
-                case 'tags':
-                    $tags = explode(',', $value);
-                    break;
-                case 'allergies':
-                    $allergies = explode(',', $value);
-                    break;
-                case 'prepTime':
-                    $prepTime = explode(',', $value);
-                    break;
-                endswitch;
-        } 
 
+                    // make sure we're getting what we think were getting, need arrays, if strings passed and switched into arrays
+                    if (!is_array($columnOptions_array)) { $columnOptions_array = explode(",", $columnOptions_array); }
+                    if (!is_array($whereOptions_array)) { $whereOptions_array = explode(",", $whereOptions_array); }
+                    if (!is_array($sortingOptions_array)) { $sortingOptions_array = explode(",", $sortingOptions_array); }
 
-
-
-
-
-
-
-                $sql = "SELECT DISTINCT r.id, r.title, r.description, r.main_image, r.average_rating \n";
-                $sql .= "FROM recipes r \n";
-                if(count($categories) > 0){
-                    $sql .= "JOIN recipestocategories rc ON r.id = rc.recipe_id \n";
-                    $sql .= "JOIN categories c ON c.id = rc.cat_id \n";
-                }
-                if(count($tags) > 0){
-                    $sql .= "JOIN recipestotags rt ON r.id = rt.recipe_id \n";
-                    $sql .= "JOIN tags t ON t.id = rt.tag_id \n";
-                }
-                if(count($allergies) > 0){
-                    $sql .= "JOIN recipestoallergies ra ON r.id = ra.recipe_id \n";
-                    $sql .= "JOIN allergies a ON a.id = ra.allergy_id \n";
-                }
-                if(count($favorites) > 0) {
-                    $sql .= "JOIN myFavorites f ON r.id = f.recipe_id \n";
-                }
-                $sql .= "WHERE r.is_private = 0 OR r.chef_id = $chefId \n";
-                if (count($cookTime) > 0) {
-                    $sql .= "AND r.cook_time BETWEEN $cookTime[0] AND $cookTime[1] \n";
-                }
-                if (count($stars) > 0) {
-                    $sql .= "AND r.average_rating BETWEEN $stars[0] AND $stars[1]\n";            
-                }
-                if (count($favorites) > 0) {
-                    $sql .= "AND f.chef_id = $chefId \n";
-                }
-                if (count($categories) > 0) {
-                    $inVals = "";
-                    foreach($categories as $val){
-                        $inVals .= "$val,";
+                    // make sure that all column options are abbreviated with r.
+                    if (!in_array("*", $columnOptions_array)) {
+                        foreach ($columnOptions_array as $column) {
+                            $temp_array[] = "r.{$column}";
+                        }
+                        $columnOptions_array = $temp_array;
                     }
-                // @ methods end
-                    $inVals = rtrim($inVals, ',');
-                    $sql .= "AND c.id IN ($inVals) \n";
-                }
-                if (count($tags) > 0) {
-                    $inVals = "";
-                    foreach($tags as $val){
-                        $inVals .= "$val,";
-                    }
-                    $inVals = rtrim($inVals, ',');
-                    $sql .= "AND t.id IN ($inVals) \n";
-                }
-                if (count($allergies) > 0) {
-                    $inVals = "";
-                    foreach($allergies as $val){
-                        $inVals .= "$val,";
-                    }
-                    $inVals = rtrim($inVals, ',');
-                    $sql .= "AND a.id IN ($inVals) \n";
-                }
-                if (count($prepTime) > 0) {
-                    $sql .= "AND r.prep_time BETWEEN $prepTime[0] AND $prepTime[1] \n";
-                }
+                // Begin building the SQL
+                    // build SELECT
+                    $sql = "SELECT " . implode(", ", $columnOptions_array) . " ";
 
-                // printf('<pre>' . $sql . '</pre>');
-                return self::find_by_sql($sql);
+                    // build FROM
+                    $sql .= "FROM " . static::$tableName . " AS r ";
+
+                    // see if we need to do joins, and adding possible where clauses
+                        if($categories){
+                            $sql .= "INNER JOIN RecipesToCategories AS rc ON r.id = rc.recipe_id ";
+                            $sql .= "INNER JOIN Categories AS c ON c.id = rc.cat_id ";
+                            $categoryIds = implode(',',$categories);
+                            $whereOptions_array[] = "c.id IN ({$categoryIds})"; 
+                        }
+                        if($tags){
+                            $sql .= "INNER JOIN RecipesToTags AS rt ON r.id = rt.recipe_id ";
+                            $sql .= "INNER JOIN Tags AS t ON t.id = rt.tag_id ";
+                            $tagIds = implode(',', $tags);
+                            $whereOptions_array[] = "t.id IN ({$tagIds})"; 
+                        }
+                        if($allergies){
+                            $sql .= "INNER JOIN RecipesToAllergies AS ra ON r.id = ra.recipe_id ";
+                            $sql .= "INNER JOIN Allergies AS a ON a.id = ra.allergy_id ";
+                            $allergyIds = implode(',', $allergies);
+                            $whereOptions_array[] = "a.id IN ({$allergyIds})";
+                        }
+                        if($myFavorites) {
+                            $sql .= "INNER JOIN MyFavorites AS f ON r.id = f.recipe_id ";
+                            $whereOptions_array[] = "f.chef_id = {$chefId}";
+                        }
+                        if($tryLater) {
+                            $sql .= "INNER JOIN TryLater AS tl ON r.id = tl.recipe_id ";
+                            $whereOptions_array[] = "tl.chef_id = {$chefId}";
+                        }
+                    // add some wheres
+                        // where is not privet except mine
+                        $whereOptions_array[] = "(r.is_private = 0 OR r.chef_id = {$chefId})";
+                        // get recipes that are published
+                        $whereOptions_array[] = "is_published = 1";
+                        if ($cookTime) {
+                            $whereOptions_array[] = "(r.cook_time BETWEEN {$cookTime[0]} AND {$cookTime[1]})";
+                        }
+                        if ($stars) {
+                            $whereOptions_array[] = "r.average_rating >= {$stars}";            
+                        }
+                        if ($prepTime) {
+                            $whereOptions_array[] = "(r.prep_time BETWEEN {$prepTime[0]} AND {$prepTime[1]})";
+                        }
+                        if ($totalTime) {
+                            $whereOptions_array[] = "(r.total_time BETWEEN {$totalTime[0]} AND {$totalTime[1]})";
+                        }
+
+                    // build WHERE, make sure to check whether it is an AND or an OR statement, AND by default OR has to be specified
+                    for ($i=0; $i < count($whereOptions_array); $i++) { 
+                        // add WHERE
+                        if ($i == 0) { $sql .= "WHERE "; }
+                        // set option
+                        $whereConnector = "AND";
+                        $whereOption = $whereOptions_array[$i];
+                        // check to see if it is an OR or AND
+                        if (strpos($whereOption, "::OR")) {
+                            $whereConnector = "OR";
+                            // remove the ::OR
+                            $whereOption = str_replace("::OR", "", $whereOption);
+                        }
+                        // add WHERE option
+                        $sql .= $whereOption;
+                        // add AND or OR or end
+                        if (!($i >= count($whereOptions_array) - 1)) { $sql .= " {$whereConnector} "; } else { $sql .= " "; }
+                    }
+
+                    // Add the sorting options if defined
+                    foreach($sortingOptions_array as $option) {
+                        $sql .= "{$option} ";
+                    }
+
+                // make the query
+                // var_dump($sql);
+                // echo $sql;
+                $result = static::find_by_sql($sql);
+                // var_dump($result);
+                // return the data
+                return $result;
             }
         // @ class specific queries end
         

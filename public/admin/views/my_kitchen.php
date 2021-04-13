@@ -41,7 +41,7 @@
             <?php 
                 foreach ($TopCategories as $Category) {
             ?>
-                <a href="my_kitchen?category_ids=<?php echo $Category->id; ?>" class="top-cat flex-center-vertical">
+                <a href="my_kitchen?categories=<?php echo $Category->id; ?>" class="top-cat flex-center-vertical">
                     <img src="<?php echo IMAGE_LINK_PATH . "/original/top-cat{$Category->id}.jpg"; ?>" alt="">   
                     <h3><?php echo $Category->name; ?></h3>
                 </a>
