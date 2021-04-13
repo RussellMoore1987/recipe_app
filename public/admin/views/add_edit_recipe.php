@@ -136,6 +136,7 @@
         <input type="hidden" name="recipe[chef_id]" value="<?php echo $recipe_obj->chef_id ?? $addUserDefault ?? "";?>">
         <input type="hidden" name="recipe[main_image]" value="<?php echo $recipe_obj->main_image;?>">
         <input type="hidden" name="recipe[average_rating]" value="<?php echo $recipe_obj->average_rating ?? 0;?>">
+        <input type="hidden" name="recipe[is_published]" value="<?php echo $recipe_obj->is_published ?? 1;?>">
         <input type="hidden" name="message" value="The recipe has been updated.">
 
         <!-- submit button -->
