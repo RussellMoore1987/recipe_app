@@ -101,6 +101,11 @@ svg{
     transition: fill 400ms ease-in-out;
 }
 
+
+::selection {
+    color: #ffffff !important;
+    background: var(--theme-color, #B2A57C);
+}
 /* ====================== scrollbar pieces start ====================== */
 
 /* https://css-tricks.com/custom-scrollbars-in-webkit/ */

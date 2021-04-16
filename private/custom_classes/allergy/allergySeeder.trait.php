@@ -2,7 +2,7 @@
     trait AllergySeeder {
 
         // get seeder default record count
-        static public $seederDefaultRecordCount = 8;
+        static public $seederDefaultRecordCount = 15;
 
         // sql feeder
         static public function seeder_setter(object $Seeder) {

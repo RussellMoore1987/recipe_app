@@ -7,6 +7,7 @@
 
         // @ login functionality start
             // TODO-CI: add to main CI
+            // TODO: clean up var_dump
             // # login
             static public function login(array $login_data_array) {
                 // get class and fields, there should only 4 values in this array
@@ -21,20 +22,20 @@
                     $username = DatabaseObject::db_escape(trim($login_data_array['field1']));
                     $password = trim($login_data_array['password']);
                 // find user
-                    var_dump('{$findByFiled} = \'{$username}\'',"{$findByFiled} = '{$username}'");
+                    // var_dump('{$findByFiled} = \'{$username}\'',"{$findByFiled} = '{$username}'");
                     $User = $className::find_where("{$findByFiled} = '{$username}'")[0];
-                    var_dump('$User', $User);
+                    // var_dump('$User', $User);
                     // error handling, if not there, throw an error
                     if (!$User) {
-                        echo 'Got Here!!!';
+                        // echo 'Got Here!!!';
                         return "Sorry, {$findByFiled} or password were incorrect.";
                     }
                 // check to see if password matches
-                var_dump('$password', $password);
-                var_dump('$User->$passwordFiled', $User->$passwordFiled);
-                var_dump('$User', $User);
-                var_dump('$passwordFiled', $passwordFiled);
-                var_dump('password_verify($password, $User->$passwordFiled)', password_verify($password, $User->$passwordFiled));
+                // var_dump('$password', $password);
+                // var_dump('$User->$passwordFiled', $User->$passwordFiled);
+                // var_dump('$User', $User);
+                // var_dump('$passwordFiled', $passwordFiled);
+                // var_dump('password_verify($password, $User->$passwordFiled)', password_verify($password, $User->$passwordFiled));
                 if (password_verify($password, $User->$passwordFiled)) {
                     Session::override_var('userIdentifier', $User->$identifierFiledName);
                 } else {

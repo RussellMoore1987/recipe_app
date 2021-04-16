@@ -227,16 +227,16 @@
                 // Split account based off of size
                 if ($count > 1) {
                     if ($count < 200) {
-                        $times = 2;
+                        $times = 15;
                         $offset = floor($count / $times);
                     } elseif ($count < 500) {
-                        $times = 3;
+                        $times = 40;
                         $offset = floor($count / $times);
                     } elseif ($count < 1000) {
-                        $times = 5;
+                        $times = 80;
                         $offset = floor($count / $times);
                     } elseif ($count < 2000) {
-                        $times = 10;
+                        $times = 180;
                         $offset = floor($count / $times);
                     }
                     $replyInfo['times'] = $times;
