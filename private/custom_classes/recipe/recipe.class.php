@@ -141,7 +141,6 @@
                 // TODO: remove all echoes and var dumps
                 // setting up default parameters 
                 $chefId = $_SESSION['id'];
-                // TODO: add searchBy, text search
                 $searchBy = $_GET['searchBy'] ?? '';
                 $sortBy = isset($_GET['sortBy']) ? explode(',', $_GET['sortBy']) : [];
                 $cookTime = isset($_GET['cookTime']) ? explode(',', $_GET['cookTime']) : [];
