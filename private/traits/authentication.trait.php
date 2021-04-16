@@ -27,7 +27,7 @@
                     // var_dump('$User', $User);
                     // error handling, if not there, throw an error
                     if (!$User) {
-                        echo 'Got Here!!!';
+                        // echo 'Got Here!!!';
                         return "Sorry, {$findByFiled} or password were incorrect.";
                     }
                 // check to see if password matches

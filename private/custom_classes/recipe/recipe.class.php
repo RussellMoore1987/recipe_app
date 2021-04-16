@@ -138,10 +138,12 @@
         // @ class specific queries start
             // Dynamic recipe searching
             public static function recipe_search(array $sqlOptions = []) {
+                // TODO: remove all echoes and var dumps
                 // setting up default parameters 
                 $chefId = $_SESSION['id'];
-                // TODO: sortBy
-                $sortBy = isset($_GET['sortBy']) ? explode(',', $_GET['sortBy']) : '';
+                // TODO: add searchBy, text search
+                $searchBy = $_GET['searchBy'] ?? '';
+                $sortBy = isset($_GET['sortBy']) ? explode(',', $_GET['sortBy']) : [];
                 $cookTime = isset($_GET['cookTime']) ? explode(',', $_GET['cookTime']) : [];
                 $stars = $_GET['stars'] ?? [];
                 $myFavorites = $_GET['myFavorites'] ?? '';
@@ -151,8 +153,26 @@
                 $allergies = isset($_GET['allergies']) ? explode(',', $_GET['allergies']) : [];
                 $prepTime = isset($_GET['prepTime']) ? explode(',', $_GET['prepTime']) : [];
                 $totalTime = isset($_GET['totalTime']) ? explode(',', $_GET['totalTime']) : [];
-                // TODO: validate
-                
+                // TODO: validate, need to increase testing later on but for right now just do some simple testing for basic things that we need
+                if ($prepTime) {$prepTime = self::range_of_numbers($prepTime);}
+                if ($cookTime) {$cookTime = self::range_of_numbers($cookTime);}
+                if ($totalTime) {$totalTime = self::range_of_numbers($totalTime);}
+                if ($stars) {$stars = (int) $stars;}
+                if ($categories) {$categories = self::array_of_numbers($categories);}
+                if ($tags) {$tags = self::array_of_numbers($tags);}
+                if ($allergies) {$allergies = self::array_of_numbers($allergies);}
+                // validate sort by options
+                if ($sortBy) {
+                    $sortBy = self::validate_sort_by_options($sortBy);
+                    if ($sortBy) {
+                        // add to $sqlOptions['sortingOptions']
+                        $sqlOptions['sortingOptions'] = $sqlOptions['sortingOptions'] ?? [];
+                        $sqlOptions['sortingOptions'] = array_merge($sortBy,$sqlOptions['sortingOptions']);
+                        // add ORDER BY
+                        array_unshift($sqlOptions['sortingOptions'], 'ORDER BY ');
+                    }
+                }
+
                 // prepare the SQL, borrowed code from find where
                 // get options
                     // check to see if the array is empty
@@ -180,7 +200,7 @@
                     }
                 // Begin building the SQL
                     // build SELECT
-                    $sql = "SELECT " . implode(", ", $columnOptions_array) . " ";
+                    $sql = "SELECT DISTINCT r.id, " . implode(", ", $columnOptions_array) . " ";
 
                     // build FROM
                     $sql .= "FROM " . static::$tableName . " AS r ";
@@ -216,7 +236,7 @@
                         // where is not privet except mine
                         $whereOptions_array[] = "(r.is_private = 0 OR r.chef_id = {$chefId})";
                         // get recipes that are published
-                        $whereOptions_array[] = "is_published = 1";
+                        $whereOptions_array[] = "r.is_published = 1";
                         if ($cookTime) {
                             $whereOptions_array[] = "(r.cook_time BETWEEN {$cookTime[0]} AND {$cookTime[1]})";
                         }
@@ -228,6 +248,13 @@
                         }
                         if ($totalTime) {
                             $whereOptions_array[] = "(r.total_time BETWEEN {$totalTime[0]} AND {$totalTime[1]})";
+                        }
+                        if ($searchBy) {
+                            $searchBy = DatabaseObject::db_escape($searchBy);
+                            $searchBySql = "(r.title LIKE '%{$searchBy}%' OR ";
+                            $searchBySql .= "r.description LIKE '%{$searchBy}%' OR ";
+                            $searchBySql .= "r.directions LIKE '%{$searchBy}%')";
+                            $whereOptions_array[] = $searchBySql;
                         }
 
                     // build WHERE, make sure to check whether it is an AND or an OR statement, AND by default OR has to be specified
@@ -297,5 +324,77 @@
                 return "{$path}/{$this->main_image}";
             }
         // @ methods end
+
+        // @ class helper functions start
+            // this is a helper function for the main search, makes sure that Pacific input is a range otherwise sets defaults 
+            static public function range_of_numbers(array $rangeOfNumbers=[0,120]) {
+                // make sure you have a range otherwise set defaults
+                if (!(count($rangeOfNumbers) == 2)) {
+                    // Run as default
+                    $rangeOfNumbers = [0,120];
+                }
+                if (!is_numeric($rangeOfNumbers[0])) {
+                    $rangeOfNumbers[0] = 0;
+                }
+                if (!is_numeric($rangeOfNumbers[1])) {
+                    $rangeOfNumbers[1] = 120;
+                }
+
+                return $rangeOfNumbers;
+            }
+
+            // checks to make sure all the items are a number
+            static public function array_of_numbers(array $arrayOfNumbers=[]) {
+                // make sure each item in the array is numeric otherwise take it out
+                $temp_array = [];
+                foreach ($arrayOfNumbers as $num) {
+                    if (is_numeric($num)) {
+                        $temp_array[] = (int) $num;
+                    }
+                }
+
+                // return data
+                return $temp_array;
+            }
+
+             // checks, validates, and builds sort by options
+             static public function validate_sort_by_options(array $sortByOptions=[]) {
+                // available sort by options
+                $sortOptions = ['title', 'stars', 'prepTime', 'cookTime', 'totalTime'];
+                $temp_array = [];
+                foreach ($sortByOptions as $sortOption) {
+                    $ascendingOrder = '';
+                    if (contains($sortOption, '::')) {
+                        $parts = explode("::", $sortOption);
+                        $sortOption = $parts[0];
+                        if ($parts[1] == 'highToLow') {
+                            $ascendingOrder = ' DESC';
+                        }
+                    }
+                    if (in_array($sortOption, $sortOptions)) {
+                        switch ($sortOption) {
+                            case 'title': $temp_array[] = 'r.title' . $ascendingOrder; break;
+                            case 'stars': $temp_array[] = 'r.average_rating' . $ascendingOrder; break;
+                            case 'prepTime': $temp_array[] = 'r.prep_time' . $ascendingOrder; break;
+                            case 'cookTime': $temp_array[] = 'r.cook_time' . $ascendingOrder; break;
+                            case 'totalTime': $temp_array[] = 'r.total_time' . $ascendingOrder; break;
+                        }
+                    }
+                }
+
+                // add on comas
+                $sortByOptions = [];
+                foreach ($temp_array as $sortOption) {
+                    if (end($temp_array) == $sortOption) {
+                        $sortByOptions[] = $sortOption;
+                    } else {
+                        $sortByOptions[] = $sortOption . ',';
+                    }
+                }
+
+                // return data
+                return $sortByOptions;
+            }
+        // @ class helper functions end
     }
 ?>

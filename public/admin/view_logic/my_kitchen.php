@@ -3,18 +3,13 @@
         $pageTitle = "My Kitchen";
 
     // get recipes
-        // TODO: adjust this to only get my (chef) recipes
-        // $sqlOptions['columnOptions'] = ['id', 'title', 'total_time', 'description', 'main_image', 'average_rating'];
-        // $sqlOptions['whereOptions'] = ["is_private = 0", "is_published = 1"];
-        // $sqlOptions['sortingOptions'] = "LIMIT 20";
-        // $Recipes = Recipe::find_where($sqlOptions);
-
         $sqlOptions['columnOptions'] = ['id', 'title', 'total_time', 'description', 'main_image', 'average_rating'];
-        // TODO: set where chef id = session id, What about my favorites
-        $sqlOptions['whereOptions'] = ["r.chef_id = {$_SESSION['id']}"];
-        $sqlOptions['sortingOptions'] = "LIMIT 20";
+        // check to see if her passing in any other parameters via GET/URL
+        if (!(isset($_GET['myFavorites']) || isset($_GET['tryLater']))) {
+            $sqlOptions['whereOptions'] = ["r.chef_id = {$_SESSION['id']}"];
+        } 
+        $sqlOptions['sortingOptions'] = ["LIMIT 20"];
         $Recipes = Recipe::recipe_search($sqlOptions);
-        // $Recipes = Recipe::recipe_search($chefId, $cookTime, $stars, $favorites, $categories, $tags, $allergies, $prepTime);
         
     // get my favorites
         $Chef = Chef::find_by_id($_SESSION['id']);
