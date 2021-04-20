@@ -1,8 +1,3 @@
-<!-- <form action="upload" method="post" enctype="multipart/form-data">
-    Select image to upload:
-    <input type="file" name="fileToUpload" id="fileToUpload">
-    <input type="submit" value="Upload Image" name="submit">
-</form> -->
 <style>
     .flex-container {
         display: flex;
@@ -19,8 +14,6 @@
         padding: 10px;
     }
 
-    .row>label {}
-
     input[type="file"] {
         font-size: 17px;
         color: #b8b8b8;
@@ -36,13 +29,6 @@
         padding: 0;
         box-sizing: border-box;
     }
-
-    /* 
-    .container {
-        height: 350px;
-        width: 350px;
-        position: relative;
-    } */
 
     .wrapper {
         position: relative;
@@ -141,7 +127,7 @@
 <form action="upload" method="post" enctype="multipart/form-data" id="uploadForm">
     <div class="wrapper">
         <input type="text" id="recipeId" value="<?php echo $id ?>" hidden="hidden">
-        <input type="file" name="recipeImage" onChange="displayImage(this)" id="recipeImage" hidden=hidden>
+        <input type="file" name="recipeImage" onChange="displayImage(this)" id="recipeImage" hidden="hidden">
         <div class="recipe-id" name="<?php echo $id ?>"></div>
         <div class="image">
             <img id="preview-img" src="" alt="" hidden="hidden">
@@ -170,6 +156,7 @@
     const fileName = document.querySelector(".file-name");
     const defaultBtn = document.querySelector("#recipeImage");
     const customBtn = document.querySelector("#custom-btn");
+    const submitBtn = document.querySelector("#submit-btn");
     const cancelBtn = document.querySelector("#cancel-btn i");
     const img = document.querySelector("#preview-img");
     const rid = document.querySelector(".recipe-id");
@@ -182,7 +169,6 @@
     }
 
     function displayImage(e) {
-        console.log(e.files[0])
         if (e.files[0]) {
             var reader = new FileReader();
             reader.onload = function(e) {
@@ -220,41 +206,3 @@
         }
     });
 </script>
-
-
-
-<?php
-// include ImageManipulator class
-require_once('../../private/classes/ImageManipulator.php');
-
-foreach ($_FILES as $file) {
-    // array of valid extensions
-    $validExtensions = array('.jpg', '.jpeg', '.gif', '.png');
-    // get extension of the uploaded file
-    $fileExtension = strrchr($file['name'], ".");
-    // check if file Extension is on the list of allowed ones
-    if (in_array($fileExtension, $validExtensions)) {
-        $newNamePrefix = time() . '_';
-        $manipulator = new ImageManipulator($file['tmp_name']);
-        $width  = $manipulator->getWidth();
-        $height = $manipulator->getHeight();
-        $centreX = round($width / 2);
-        $centreY = round($height / 2);
-        // our dimensions will be 200x130
-        $x1 = $centreX - 100; // 200 / 2
-        $y1 = $centreY - 65; // 130 / 2
-
-        $x2 = $centreX + 100; // 200 / 2
-        $y2 = $centreY + 65; // 130 / 2
-
-        // center cropping to 200x130
-        $newImage = $manipulator->crop($x1, $y1, $x2, $y2);
-        // saving file to uploads folder
-        $manipulator->save('uploads/' . $newNamePrefix . $file['name']);
-        echo 'Done ...';
-    } else {
-        echo 'You must upload an image...';
-    }
-}
-
-?>
