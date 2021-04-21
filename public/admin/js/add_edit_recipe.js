@@ -3,6 +3,41 @@ $(document).ready(function() {
     var titleText = $('#title').val();
     $('#title').val(' ' + titleText).focus();
 
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            var parent = this.parentElement;
+
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+
+            } else {
+                content.style.maxHeight = "none";
+
+            }
+        });
+    };
+
+
+    // toggle active and not active, add listener to the parent so that new children will have desired functionality
+    $(".multiSelect span").on("click", function () {
+        // go class on click
+        $(this).toggleClass("active");
+        // create default array
+        const idList = [];
+        // find all active elements and get their IDs, put them into an array
+        $(this).parent().find("span.active").map(function() {idList.push(this.id)})
+        // if ID list is blank add in blank string
+        if (idList.length < 1) {
+            idList.push(" ");
+        }
+        // . Array into a string and put it in the input for that section
+        $(this).parent().find("input[type='hidden']").attr("value", idList.join());
+    });
 
     $('#add_button').click(function(){
         $('#recipe_ingredient_table tr:last' ).after('<tr><td><input class="ingredient" name="ingredient_whole_amount" id="ingredient_whole_amount" type="number">' +
@@ -13,7 +48,7 @@ $(document).ready(function() {
         '</td><td><select class="ingredient" name="ingredient_unit" id="ingredient_unit"><option value="pinch">Pinch</option><option value="teaspoons">Teaspoon(s)</option>' +
         '<option value="tablespoons">Tablespoon(s)</option> <option value="cups">Cup(s)</option><option value="ounces">Ounce(s)</option><option value="quarts">Quart(s)</option>' +
         '<option value="pounds">Pound(s)</option><option value="count">Count</option></select></td><td><input class="ingredient" name="ingredient" id="ingredient" type="text"></td>' +
-        '<td><button type="button" class="del_button">Remove</button></td></tr>')
+        '<td><button type="button" class="del_button"><i class="fa fa-trash"></i></button></td></tr>')
     });
 
     $('#recipe_ingredient_table').on('click', '.del_button', function(){
@@ -66,10 +101,9 @@ $(document).ready(function() {
 
     $('#delete_button').click(function(){
         var choice = confirm('Do you really want to delete this recipe?');
-        if(choice === true) {
+        if(choice == true) {
             $('#delete').val(true);
         }
-
     });
 
 

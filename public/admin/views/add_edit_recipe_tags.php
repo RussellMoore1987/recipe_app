@@ -18,7 +18,7 @@
         ?>
     </div>
 
-    <form method="post" action='add_edit_recipe_tags<?php if($recipeId != 'add' && $recipeId > 0) { echo "?recipeId={$recipeId}";} ?>'>
+    <form method="post" action='add_edit_recipe_tags<?php if($recipe_id != 'add' && $recipe_id > 0) { echo "?recipe_id={$recipe_id}";} ?>'>
         <!-- main form -->
         <div>
             <label for="recipe[title]">Recipe Name:</label>
@@ -96,14 +96,14 @@
         <br>
 
         <!-- hidden form fields -->
-        <input type="hidden" name="recipe[id]" value="<?php echo $recipeId == "add" ? NULL : $recipeId; ?>">
+        <input type="hidden" name="recipe[id]" value="<?php echo $recipe_id == "add" ? NULL : $recipe_id; ?>">
         <input type="hidden" name="message" value="The recipe tags have been updated.">
 
 
         <!-- submit button -->
         <div>
             <button type="submit">Update Recipe Tags</button>
-            <a class="nav_button" href="view_recipe?recipe_id=<?php echo $recipeId; ?>">Go Back</a>
+            <a class="nav_button" href="view_recipe?recipe_id=<?php echo $recipe_id; ?>">Go Back</a>
         </div>
     </form>
 </div> 

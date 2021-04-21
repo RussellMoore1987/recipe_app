@@ -1,3 +1,8 @@
+<head>
+<script src="https://kit.fontawesome.com/58867e1c02.js" crossorigin="anonymous"></script>
+    <!-- fonts -->
+</head>
+
 <div>
     <div class="error">
         <?php
@@ -18,46 +23,47 @@
         ?>
     </div>
     <div>
-        <a href='add_edit_recipe'>Add New Recipe</a>
+        <h2>Add New Recipe</h2>
     </div>
-    <form id="main_form" method="post" action='add_edit_recipe<?php if($recipeId != 'add' && $recipeId > 0) { echo "?recipeId={$recipeId}";} ?>'>
+    <form id="main_form" method="post" action='add_edit_recipe<?php if($recipe_id != 'add' && $recipe_id > 0) { echo "?recipe_id={$recipe_id}";} ?>'>
         <!-- main form -->
         <div>
-            <label for="recipe[title]">Recipe Title</label>
+            <label  for="recipe[title]">Recipe Title</label>
             <!-- maxlength="50" minlength="2" required -->
-            <input id="title" type="text" name="recipe[title]" value="<?php echo $recipe_obj->title ?>" >
+            <input  id="title" type="text" name="recipe[title]" value="<?php echo $recipe_obj->title ?>" >
         </div>
         <br>
         <div>
-            <label for="recipe[description]">Recipe Description</label>
+            <label  for="recipe[description]">Recipe Description</label>
             <!-- maxlength="250" minlength="0" -->
-            <input id="description" type="text" name="recipe[description]" value="<?php echo $recipe_obj->description ?>" >
+            <br>
+            <textarea id="description"  name="recipe[description]" ><?php echo $recipe_obj->description ?></textarea>
         </div>
-        <br>
+        
         <div>
             <label for="recipe[prep_time]">Recipe Prep Time</label>
             <!-- maxlength="250" minlength="0"  -->
-            <input id="prep_time" type="number" name="recipe[prep_time]" value="<?php echo $recipe_obj->prep_time ?>" >
+            <input  id="prep_time" type="number" name="recipe[prep_time]" value="<?php echo $recipe_obj->prep_time ?>" >
         </div>
-        <br>
+        
         <div>
             <label for="recipe[cook_time]">Recipe Cook Time</label>
             <!-- maxlength="250" minlength="0"  -->
-            <input id="cook_time" type="number" name="recipe[cook_time]" value="<?php echo $recipe_obj->cook_time ?>" >
+            <input  id="cook_time" type="number" name="recipe[cook_time]" value="<?php echo $recipe_obj->cook_time ?>" >
         </div>
-        <br>
+        
         <div>
             <label for="recipe[total_time]">Recipe Total Time</label>
             <!-- maxlength="250" minlength="0"  -->
-            <input id="total_time" type="number" name="recipe[total_time]" value="<?php echo $recipe_obj->total_time ?>" >
+            <input  id="total_time" type="number" name="recipe[total_time]" value="<?php echo $recipe_obj->total_time ?>" >
         </div>
-        <br>
+        
         <div>
             <label for="recipe[num_serving]">Number of Servings</label>
             <!-- maxlength="3" minlength="0" -->
-            <input id="recipe_num_serving" type="number" name="recipe[num_serving]" value="<?php echo $recipe_obj->num_serving ?>" >
+            <input class="recipe_input_small" id="recipe_num_serving" type="number" name="recipe[num_serving]" value="<?php echo $recipe_obj->num_serving ?>" >
         </div>
-        <br>
+        
         <div>
             <label for="recipe[is_private]">Private?</label>
             <!-- maxlength="3" minlength="0" -->
@@ -103,21 +109,90 @@
                     </select>
                     </td>
                     <td><input class="ingredient" name="ingredient" id="ingredient" type="text" value=<?php echo $ingredient['ingredient']?>></td>
-                    <td><button type="button" class="del_button">Remove</button></td>
+                    <td><button type="button" class="del_button"><i class="fa fa-trash"></i></button></td>
                 </tr>
                 <?php 
                     endforeach;
                     endif; ?>
             </table>
-            <button id="add_button" type="button">Add Ingredient</button>
+            <button id="add_button" class="small_button" type="button">Add Ingredient</button>
         </div>
-        <br>
 
         <br>
         <div>
-            <label for="recipe[directions]">Directions</label>
+            <label  for="recipe[directions]">Directions</label>
             <!-- maxlength="3" minlength="0" -->
-            <textarea id="recipe_directions" name="recipe[directions]" cols="30" rows="10" ><?php echo $recipe_obj->directions ?></textarea>
+            <br>
+            <textarea  id="recipe_directions" name="recipe[directions]" rows="10" ><?php echo $recipe_obj->directions ?></textarea>
+        </div>
+        
+
+        <button type="button" class="collapsible">Add/Edit Recipe Tags</button>
+        <div class="content">
+        <button type="button" class="collapsible">Recipe Categories</button>
+            <div class="content">
+                <div class="multiSelect">        
+                    <?php
+                        // showing possible categories as well as selected categories
+                        foreach ($possibleCategories_array as $key => $value) {
+                            // set default selected value
+                            $active = "";
+                            // check to see if the post has any categories attached to it
+                            if (isset($recipeCategories_array[$key])) {
+                                $active = "active";
+                            }
+                            echo "<span id='{$key}' class='{$active}'>{$value}</span>";
+                        }
+
+                    ?>
+                    <input type="hidden" name="recipe[catIds]" value="<?php echo $catIds;?>">
+                </div>
+                <!-- old list to compare -->
+                <input type="hidden" name="recipe[catIdsOld]" value="<?php echo $catIdsOld; ?>">
+            </div>
+            <br>
+            <button type="button" class="collapsible">Recipe Tags</button>
+            <div class="content">
+                <div class="multiSelect">        
+                    <?php
+                        // showing possible tags as well as selected tags
+                        foreach ($possibleTags_array as $key => $value) {
+                            // set default selected value
+                            $active = "";
+                            // check to see if the post has any tags attached to it
+                            if (isset($recipeTags_array[$key])) {
+                                $active = "active";
+                            }
+                            echo "<span id='{$key}' class='{$active}'>{$value}</span>";
+                        }
+                    ?>
+                    <input type="hidden" name="recipe[tagIds]" value="<?php echo $tagIds; ?>">
+                </div>
+                <!-- old list to compare -->
+                <input type="hidden" name="recipe[tagIdsOld]" value="<?php echo $tagIdsOld; ?>">
+            </div>
+            <br>
+            <button type="button" class="collapsible">Recipe Allergy Tags</button>
+            <div class="content">
+                <div class="multiSelect">        
+                    <?php
+                        // showing possible labels as well as selected labels
+                        foreach ($possibleAllergies_array as $key => $value) {
+                            // set default selected value
+                            $active = "";
+                            // check to see if the post has any labels attached to it
+                            if (isset($recipeAllergies_array[$key])) {
+                                $active = "active";
+                            }
+                            echo "<span id='{$key}' class='{$active}'>{$value}</span>";
+                        }
+                    ?>
+                    <!-- get list -->
+                    <input type="hidden" name="recipe[allergyIds]" value="<?php echo $allergyIds;  ?>">
+                </div>
+                <!-- old list to compare -->
+                <input type="hidden" name="recipe[allergyIdsOld]" value="<?php echo $allergyIdsOld; ?>">
+            </div>
         </div>
         <br>
 
@@ -127,12 +202,12 @@
             required 
             <input type="date" name="recipe[created_date]" value="" >
     </div> -->
-    <br>
+    
 
 
         <!-- hidden form fields -->
         <input type="hidden" id="recipe_ingredients" name="recipe[ingredients]">
-        <input type="hidden" name="recipe[id]" value="<?php echo $recipeId == "add" ? NULL : $recipeId; ?>">
+        <input type="hidden" name="recipe[id]" value="<?php echo $recipe_id == "add" ? NULL : $recipe_id; ?>">
         <input type="hidden" name="recipe[chef_id]" value="<?php echo $recipe_obj->chef_id ?? $addUserDefault ?? "";?>">
         <input type="hidden" name="recipe[main_image]" value="<?php echo $recipe_obj->main_image;?>">
         <input type="hidden" name="recipe[average_rating]" value="<?php echo $recipe_obj->average_rating ?? 0;?>">
@@ -141,28 +216,28 @@
 
         <!-- submit button -->
         <div>
-            <button type="submit" id="submit_button"><?php echo $recipeId == "add" ? "Add" : "Edit"; ?> Recipe</button>
+            <button type="submit" id="submit_button"><?php echo $recipe_id == "add" ? "Add" : "Edit"; ?> Recipe</button>
         </div>
         <!-- <div>
             <button type="button" id="update_button">Update</button>
         </div> -->
     </form>
-    <form id="main_form" method="post" action='add_edit_recipe'>
-    
-    <div>
+    <form id="main_form" method="post" action='add_edit_recipe<?php if($recipe_id != 'add' && $recipe_id > 0) { echo "?recipe_id={$recipe_id}";} ?>'>
+    <br>
+    <div >
         <input type="hidden" name="delete">
         <input type="hidden" name="message" value="The recipe has been deleted.">
-        <?php if($recipeId != 'add' && $recipeId > 0): ?>
+        <?php if($recipe_id != 'add' && $recipe_id > 0): ?>
         <button type="submit" id="delete_button" name=delete>Delete</button>
         <?php endif;?>
-        <a class="nav_button" href="view_recipe?recipe_id=<?php echo $recipeId; ?>">Go Back</a>
+        <a class="nav_button" href="view_recipe?recipe_id=<?php echo $recipe_id; ?>">Go Back</a>
     </div>
-
+    <br>
 </div>
 
 <!-- <div>
     <form id="test_form" method="get" action='add_edit_recipe'>
-            <input type="text" name=recipeId>
+            <input type="text" name=recipe_id>
             <button type="submit" id="test_submit_button">Test GET</button>
     </form>
 </div> -->
