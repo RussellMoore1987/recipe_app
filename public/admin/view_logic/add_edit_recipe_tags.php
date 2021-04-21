@@ -6,25 +6,25 @@
         $pageTitle = "Add/Edit Recipe Tags";
 
         // set defaults
-        $recipeId = $_GET["recipeId"] ?? "add";
+        $recipe_id = $_GET["recipe_id"] ?? "add";
 
         // if not add make number
-        if (!($recipeId == "add")) {
-            // this forces the $recipeId to be an integer
-            $recipeId = (int) $recipeId;
+        if (!($recipe_id == "add")) {
+            // this forces the $recipe_id to be an integer
+            $recipe_id = (int) $recipe_id;
         }
 
           // # check to see if we have a real ID
-        if (!($recipeId == "add")) {
-            // this forces the $recipeId to be an integer
-            $recipeId = (int) $recipeId;
+        if (!($recipe_id == "add")) {
+            // this forces the $recipe_id to be an integer
+            $recipe_id = (int) $recipe_id;
             // get recipe for editing
-            $recipe_obj  = recipe::find_by_id($recipeId);
+            $recipe_obj  = recipe::find_by_id($recipe_id);
             // error handling, if not there, throw an error
             if (!$recipe_obj ) {
                 $recipe_obj  = new recipe();
-                $recipe_obj ->errors[] = "No recipe with the ID of {$recipeId} exists";
-                $recipeId = "add";
+                $recipe_obj ->errors[] = "No recipe with the ID of {$recipe_id} exists";
+                $recipe_id = "add";
             }
         } else {
             // create empty objects so page does not brake
@@ -36,10 +36,10 @@
             if (is_post_request() && isset($_POST["recipe"]) && !isset($_POST["delete"])) { 
                 // set id
                 $recipe_obj = new recipe($_POST["recipe"]);
-                $recipeId = $recipe_obj->id;
+                $recipe_id = $recipe_obj->id;
 
                  $update_info = array(
-                    "id" => $recipeId,
+                    "id" => $recipe_id,
                     "catIds" => $_POST["recipe"]["catIds"], 
                     "catIdsOld" => $_POST["recipe"]["catIdsOld"],
                     "allergyIds" => $_POST["recipe"]["allergyIds"],
