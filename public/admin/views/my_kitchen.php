@@ -4,11 +4,11 @@
 
 
 <div class="layout-container">
-    <div class="main-search flex-center-vertical">
+    <div class="main-search flex-center-vertical"  action="">
         <div>
-            <input type="text" placeholder="Search My Kitchen...">
+            <input type="text" placeholder="Search My Kitchen..." value="<?php echo $_GET['searchBy'] ?? ''; ?>"> 
         </div>
-        <div class="filter-icon-container active">
+        <div class="filter-icon-container <?php echo $filterActive ?? '' ?>">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33.03 24.6" class="filter-icon">
                 <title>Filter Icon</title>
                 <g id="Layer_2" data-name="Layer 2">
@@ -19,7 +19,7 @@
                     </g>
                 </g>
             </svg>
-            <span class="filter-count">5</span>
+            <span class="filter-count"><?php echo $filterParameterCount > 0 ? $filterParameterCount : ''; ?></span>
         </div>
     </div>
 </div>
@@ -31,12 +31,17 @@
             <?php 
                 foreach ($MyFavoriteRecipes as $Recipe) {
                 // $Recipe->my_favorite_component();
+                if (strlen($Recipe->description) > 25) {
+                    $description = substr($Recipe->description,0,25) . "...";
+                } else {
+                    $description = $Recipe->description; 
+                }
             ?>
                <a href="view_recipe?recipe_id=<?php echo $Recipe->id; ?>">
                     <div class="my-favorite" style="background-image: url(<?php echo $Recipe->get_image_path('large'); ?>);">
                        <div>
                             <h3><?php echo $Recipe->title; ?></h3>
-                            <span class="recipe-description"><?php echo $Recipe->title; ?></span>
+                            <span class="recipe-description"><?php echo $description; ?></span>
                             <span class="small-rating"><?php echo $Recipe->get_stars(); ?></span>
                        </div>
                     </div>

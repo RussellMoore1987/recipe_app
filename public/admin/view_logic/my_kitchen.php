@@ -3,7 +3,7 @@
         $pageTitle = "My Kitchen";
 
     // set filter bar
-        $filterBar = true;
+        $filterBar = 'my_kitchen';
 
     // get recipes
         $sqlOptions['columnOptions'] = ['id', 'title', 'total_time', 'description', 'main_image', 'average_rating'];

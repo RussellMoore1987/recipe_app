@@ -220,13 +220,145 @@
             filterTimeInputs.forEach(filterTimeInput => {
                 filterTimeInput.value = '';
             });
+            // reset main search
+            document.querySelector('.main-search input').value = '';
         });
-        // apply filter button
-        document.querySelector('#applyFilter').addEventListener("click", function() {
-            console.log('got here!!!');
-            // get link
-            // ! working here**************************************
+        // apply filter form
+        document.querySelector('#filterForm').addEventListener("submit", function(event) {
+            event.preventDefault();
+            // get first part of link
+            let url = this.closest('.side-bar-filter').dataset.link;
+            // set default link options array
+            const linkOptions = [];
+            // check and see what other parameters we have and then set them
+            // * order by
+                const checkedCheckBoxes = document.querySelectorAll('.sort-by-item input[type="checkbox"]:checked');
+                let orderByCheckBoxString = '';
+                if (checkedCheckBoxes.length > 0) {
+                    // storing the last item in the array
+                    const lastElement = checkedCheckBoxes[checkedCheckBoxes.length - 1];
+                    orderByCheckBoxString = 'sortBy=';
+                    checkedCheckBoxes.forEach(element => {
+                        // check whether it's ascending or descending
+                        let sortOrder = '';
+                        const sortOrderIcon = element.closest('.sort-by-item').querySelector('i')
+                        if (
+                            sortOrderIcon.classList.contains('fa-sort-numeric-down-alt') || 
+                            sortOrderIcon.classList.contains('fa-sort-alpha-down-alt')
+                        ) {
+                            sortOrder = '::highToLow';
+                        } 
+                        // start building the string
+                        const orderBy = element.name;
+                        orderByCheckBoxString = orderByCheckBoxString + orderBy + sortOrder;
+                        if (!(element === lastElement)) {
+                            orderByCheckBoxString = orderByCheckBoxString + ',';    
+                        }
+                    });
+                    // add to link options
+                    linkOptions.push(orderByCheckBoxString);
+                }
+            // * stars
+                const stars = document.querySelector(".filter-by-stars input[name=stars]").value;
+                if (stars > 0) {
+                    // add to link options
+                    linkOptions.push(`stars=${stars}`);
+                }
+            // * categories
+                const categories = document.querySelector("input[name=categories].id-collector").value;
+                if (categories.length > 0) {
+                    // add to link options
+                    linkOptions.push(`categories=${categories}`);
+                }
+            // * tags
+                const tags = document.querySelector("input[name=tags].id-collector").value;
+                if (tags.length > 0) {
+                    // add to link options
+                    linkOptions.push(`tags=${tags}`);
+                }
+            // * allergies
+                const allergies = document.querySelector("input[name=allergies].id-collector").value;
+                if (allergies.length > 0) {
+                    // add to link options
+                    linkOptions.push(`allergies=${allergies}`);
+                }
+            // * prep time
+                let prepTimeMin = document.querySelector(".filter-times input[name=prepMin]").value;
+                let prepTimeMax = document.querySelector(".filter-times input[name=prepMax]").value;
+                if (prepTimeMin > 0 || prepTimeMax > 0) {
+                    // check too make sure we have numbers for both
+                    if (isNaN(prepTimeMin) || prepTimeMin == '' || prepTimeMin < 0) {
+                        prepTimeMin = 0;   
+                    }
+                    if (isNaN(prepTimeMax) || prepTimeMax == '' || prepTimeMax > 480) {
+                        prepTimeMax = 480;   
+                    }
+                    // add to link options
+                    linkOptions.push(`prepTime=${prepTimeMin},${prepTimeMax}`);
+                }
+            // * cook time
+                let cookTimeMin = document.querySelector(".filter-times input[name=cookMin]").value;
+                let cookTimeMax = document.querySelector(".filter-times input[name=cookMax]").value;
+                if (cookTimeMin > 0 || cookTimeMax > 0) {
+                    // check too make sure we have numbers for both
+                    if (isNaN(cookTimeMin) || cookTimeMin == '' || cookTimeMin < 0) {
+                        cookTimeMin = 0;   
+                    }
+                    if (isNaN(cookTimeMax) || cookTimeMax == '' || cookTimeMax > 480) {
+                        cookTimeMax = 480;   
+                    }
+                    // add to link options
+                    linkOptions.push(`cookTime=${cookTimeMin},${cookTimeMax}`);
+                }
+            // * total time
+                let totalTimeMin = document.querySelector(".filter-times input[name=totalMin]").value;
+                let totalTimeMax = document.querySelector(".filter-times input[name=totalMax]").value;
+                if (totalTimeMin > 0 || totalTimeMax > 0) {
+                    // check too make sure we have numbers for both
+                    if (isNaN(totalTimeMin) || totalTimeMin == '' || totalTimeMin < 0) {
+                        totalTimeMin = 0;   
+                    }
+                    if (isNaN(totalTimeMax) || totalTimeMax == '' || totalTimeMax > 480) {
+                        totalTimeMax = 960;   
+                    }
+                    // add to link options
+                    linkOptions.push(`totalTime=${totalTimeMin},${totalTimeMax}`);
+                }
+            // * title
+                const title = document.querySelector(".main-search input").value;
+                if (title.length > 0) {
+                    linkOptions.push(`searchBy=${title}`);
+                }
+
+            // build final URL 
+                if (linkOptions.length > 0) {
+                    url = url + "?";
+                    // storing the last item in the array
+                    const lastOption = linkOptions[linkOptions.length - 1];
+                    // add options
+                    linkOptions.forEach(option => {
+                        url = url + option;
+                        if (!(option === lastOption)) {
+                            url = url + '&';
+                        }
+                    });
+                    
+                }
+
+            // redirect to the given page
+            window.location.href = url;
         });
+        // set search field to submit filter
+        const mainSearchFiled = document.querySelector('.main-search input');
+        if (mainSearchFiled) {
+            mainSearchFiled.addEventListener("keyup", function(event) {
+                // check to see if we press the enter key
+                if (event.keyCode === 13) {
+                  event.preventDefault();
+                  document.querySelector('#applyFilter').click();
+                }
+            });
+        }
     }
 
 // # =================================================
