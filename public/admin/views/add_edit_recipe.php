@@ -142,6 +142,12 @@
         <!-- submit button -->
         <div>
             <button type="submit" id="submit_button"><?php echo $recipeId == "add" ? "Add" : "Edit"; ?> Recipe</button>
+            <?php 
+                if($recipeId != "add"){ ?>
+                    <button type="button" id="images_button" onClick="location.href='recipe_images?recipe_id=<?php echo $recipeId ?>'"> Manage Images</button>
+            <?php
+                }
+            ?>
         </div>
         <!-- <div>
             <button type="button" id="update_button">Update</button>

@@ -91,6 +91,4 @@
             }
             return self::run_sql($sql);
         }
-    }    
-?>
-
+    }

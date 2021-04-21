@@ -13,9 +13,6 @@
             $recipeId = (int) $recipeId;
         }
 
-
-
-
         // # check to see if we have a real ID
             if (!($recipeId == "add")) {
                 // this forces the $recipeId to be an integer
