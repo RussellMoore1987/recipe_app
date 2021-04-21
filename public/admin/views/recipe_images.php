@@ -38,6 +38,6 @@
     }
 ?>
     <div class="preview-image">
-        <div class="add-image"><a href="./image_upload?recipe_id=1">+</a></div>
+        <div class="add-image"><a href="./image_upload?recipe_id=<?php echo $id ?>" >+</a></div>
     </div>
 </div>

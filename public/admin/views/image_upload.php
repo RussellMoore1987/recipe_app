@@ -105,7 +105,11 @@
         display: block;
     }
 
-    .container #custom-btn,
+    #custom-btn {
+        width: 100%;
+    }
+
+    .container #cancel-btn,
     #submit-btn {
         margin-top: 30px;
         display: block;
@@ -126,9 +130,8 @@
 
 <form action="upload" method="post" enctype="multipart/form-data" id="uploadForm">
     <div class="wrapper">
-        <input type="text" id="recipeId" value="<?php echo $id ?>" hidden="hidden">
-        <input type="file" name="recipeImage" onChange="displayImage(this)" id="recipeImage" hidden="hidden">
-        <div class="recipe-id" name="<?php echo $id ?>"></div>
+        <input type="hidden" name="recipe_id" value="<?php echo $id ?>">
+        <input type="file" name="recipe_image" onChange="displayImage(this)" id="recipeImage" hidden="hidden">
         <div class="image">
             <img id="preview-img" src="" alt="" hidden="hidden">
         </div>
@@ -173,7 +176,7 @@
             var reader = new FileReader();
             reader.onload = function(e) {
                 img.setAttribute('src', e.target.result);
-                img.setAttribute('hidden', null);
+                img.removeAttribute('hidden');
             }
             reader.readAsDataURL(e.files[0]);
         }
@@ -195,7 +198,8 @@
             }
             cancelBtn.addEventListener("click", function() {
                 img.src = "";
-                img.hidden = "hidden";
+
+                img.setAttribute("hidden", "hidden");
                 wrapper.classList.remove("active");
             })
             reader.readAsDataURL(file);

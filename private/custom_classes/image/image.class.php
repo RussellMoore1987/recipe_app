@@ -77,7 +77,20 @@
             $sql .= "WHERE recipe_id = $recipe";
             return self::find_by_sql($sql);
         }
-    }
-    
+
+        // Upsert an image record for a recipe
+        static public function upsert_recipe_image(int $recipe_id, string $image_name, int $sort, int $is_featured, string $alt_text , int $image_id = null){
+            $sql = "";
+            if($image_id == null) {
+                $sql .= "INSERT INTO images(image_name, sort, is_featured, alt, recipe_id)";
+                $sql .= "VALUES('$image_name', $sort, $is_featured, '$alt_text', $recipe_id);";
+            } else {
+                $sql .= "UPDATE images";
+                $sql .= "SET image_name = $image_name, sort = $sort, is_featured = $is_featured, alt = $alt_text";
+                $sql .= "WHERE id = $image_id;";
+            }
+            return self::run_sql($sql);
+        }
+    }    
 ?>
 
