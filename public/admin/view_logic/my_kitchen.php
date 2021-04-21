@@ -2,6 +2,9 @@
     // set page title 
         $pageTitle = "My Kitchen";
 
+    // set filter bar
+        $filterBar = true;
+
     // get recipes
         $sqlOptions['columnOptions'] = ['id', 'title', 'total_time', 'description', 'main_image', 'average_rating'];
         // check to see if her passing in any other parameters via GET/URL

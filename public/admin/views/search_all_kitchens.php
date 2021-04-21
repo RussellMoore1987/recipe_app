@@ -9,6 +9,7 @@
     </div>
 </div>
 
+<!-- // TODO: make component -->
 <div class="side-scroll-wrapper size-category-links">
     <div class="side-scroll-container">
         <div class="category-links-size flex-sa">
